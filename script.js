@@ -169,10 +169,7 @@ function initCarousel() {
                 if (editionsSection) {
                     const offset = 80;
                     const targetPosition = editionsSection.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+                    smoothScrollTo(targetPosition, 400);
                 }
             }
         });
@@ -211,26 +208,82 @@ function initSmoothScroll() {
             if (target) {
                 const offset = 80; // Account for fixed navbar
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                
+                // Use faster custom scroll for better UX
+                smoothScrollTo(targetPosition, 400);
             }
         });
     });
 }
 
+// Custom smooth scroll with configurable duration
+function smoothScrollTo(targetPosition, duration) {
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+    
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        // Easing function for smooth deceleration
+        const easeOutQuad = progress * (2 - progress);
+        
+        window.scrollTo(0, startPosition + distance * easeOutQuad);
+        
+        if (timeElapsed < duration) {
+            requestAnimationFrame(animation);
+        }
+    }
+    
+    requestAnimationFrame(animation);
+}
+
 // ===== Scroll Animations =====
 function initScrollAnimations() {
+    // Check if user has reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (prefersReducedMotion) {
+        // Skip animations for users who prefer reduced motion
+        return;
+    }
+    
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px 0px 0px'
     };
+    
+    // Track scroll speed for adaptive animations
+    let lastScrollY = window.scrollY;
+    let scrollSpeed = 0;
+    let scrollTimeout;
+    
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        scrollSpeed = Math.abs(currentScrollY - lastScrollY);
+        lastScrollY = currentScrollY;
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            scrollSpeed = 0;
+        }, 100);
+    }, { passive: true });
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
+                // Fast scroll = instant animation, slow scroll = smooth animation
+                const isFastScroll = scrollSpeed > 50;
+                
+                if (isFastScroll) {
+                    entry.target.style.transition = 'none';
+                    entry.target.classList.add('animate-in');
+                } else {
+                    entry.target.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                    entry.target.classList.add('animate-in');
+                }
                 observer.unobserve(entry.target);
             }
         });
@@ -241,10 +294,9 @@ function initScrollAnimations() {
         '.about-card, .aim-card, .speaker-card, .register-card, .initiator-card, .section-header'
     );
     
-    animateElements.forEach((el, index) => {
+    animateElements.forEach((el) => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        el.style.transform = 'translateY(20px)';
         observer.observe(el);
     });
     
@@ -257,6 +309,18 @@ function initScrollAnimations() {
         }
     `;
     document.head.appendChild(style);
+    
+    // Instantly show elements already in viewport on page load
+    setTimeout(() => {
+        animateElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.style.transition = 'none';
+                el.classList.add('animate-in');
+                observer.unobserve(el);
+            }
+        });
+    }, 50);
 }
 
 // ===== Active Navigation Highlight =====
