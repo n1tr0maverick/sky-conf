@@ -335,7 +335,31 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache section positions to avoid reflows during scroll
+    let sectionPositions = [];
+
+    function updateSectionPositions() {
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+    }
+
+    // Initial calculation
+    updateSectionPositions();
+
+    // Update positions when images/resources are fully loaded
+    window.addEventListener('load', updateSectionPositions);
+
+    // Update on resize with debounce
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateSectionPositions, 100);
+    }, { passive: true });
+
     let ticking = false;
+    let lastCurrent = null; // Initialize as null to ensure first run updates
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -344,19 +368,24 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+
+                // Use cached positions
+                sectionPositions.forEach(pos => {
+                    if (scrolled >= pos.top) {
+                        current = pos.id;
                     }
                 });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                // Only update DOM if current section changed
+                if (current !== lastCurrent) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastCurrent = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
