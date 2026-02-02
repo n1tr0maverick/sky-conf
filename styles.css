@@ -1,23 +1,23 @@
 /* ===== CSS Variables & Base Styles ===== */
 :root {
-    /* Colors */
-    --bg-dark: #0a0a0f;
-    --bg-darker: #050508;
+    /* Colors - SKY Conference Blue Theme */
+    --bg-dark: #0a0f1a;
+    --bg-darker: #050810;
     --bg-card: rgba(255, 255, 255, 0.03);
     --bg-glass: rgba(255, 255, 255, 0.05);
     
-    --accent-primary: #a855f7;
-    --accent-secondary: #6366f1;
-    --accent-tertiary: #ec4899;
+    --accent-primary: #0ea5e9;
+    --accent-secondary: #38bdf8;
+    --accent-tertiary: #7dd3fc;
     --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    --accent-glow: 0 0 60px rgba(168, 85, 247, 0.3);
+    --accent-glow: 0 0 60px rgba(14, 165, 233, 0.3);
     
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.7);
     --text-muted: rgba(255, 255, 255, 0.5);
     
     --border-color: rgba(255, 255, 255, 0.1);
-    --border-glow: rgba(168, 85, 247, 0.3);
+    --border-glow: rgba(14, 165, 233, 0.3);
     
     /* Typography */
     --font-main: 'Outfit', sans-serif;
@@ -122,6 +122,17 @@ img {
     gap: 12px;
     font-size: 1.5rem;
     font-weight: 700;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    transition: var(--transition-medium);
+}
+
+.logo:hover .logo-img {
+    transform: scale(1.05);
 }
 
 .logo-icon {
@@ -657,6 +668,14 @@ img {
     flex-direction: column;
     align-items: center;
     gap: 8px;
+}
+
+.center-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 50%;
+    animation: pulse-glow 2s ease-in-out infinite;
 }
 
 .center-icon {
@@ -1202,6 +1221,15 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.contact-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 50%;
+    animation: pulse-glow 2s ease-in-out infinite;
+    z-index: 1;
 }
 
 .big-star {
