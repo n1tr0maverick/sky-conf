@@ -383,6 +383,41 @@ window.addEventListener('load', () => {
 });
 
 // ===== Modal Functions =====
+let lastFocusedElement = null;
+
+function trapFocus(e) {
+    const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+    if (!isTabPressed) {
+        return;
+    }
+
+    const modal = e.currentTarget;
+    const focusableElements = modal.querySelectorAll(
+        'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+
+    if (focusableElements.length === 0) {
+        e.preventDefault();
+        return;
+    }
+
+    const firstFocusableElement = focusableElements[0];
+    const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+    if (e.shiftKey) { // if shift key pressed for shift + tab combination
+        if (document.activeElement === firstFocusableElement) {
+            lastFocusableElement.focus(); // add focus for the last focusable element
+            e.preventDefault();
+        }
+    } else { // if tab key is pressed
+        if (document.activeElement === lastFocusableElement) { // if focused has reached to last focusable element then focus first focusable element
+            firstFocusableElement.focus(); // add focus for the first focusable element
+            e.preventDefault();
+        }
+    }
+}
+
 function initModals() {
     // Close modal when clicking overlay
     document.querySelectorAll('.modal-overlay').forEach(modal => {
@@ -411,13 +446,34 @@ function initModals() {
             });
         }
     });
+
+    // Add keyboard support for clickable divs (speakers/initiators)
+    document.querySelectorAll('[role="button"][tabindex="0"]').forEach(el => {
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
 }
 
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
+        lastFocusedElement = document.activeElement;
         modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+
+        // Trap focus
+        modal.addEventListener('keydown', trapFocus);
+
+        // Focus first element (usually close button)
+        setTimeout(() => {
+            const closeBtn = modal.querySelector('.modal-close');
+            if (closeBtn) closeBtn.focus();
+        }, 50);
     }
 }
 
@@ -425,8 +481,17 @@ function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         
+        // Remove focus trap
+        modal.removeEventListener('keydown', trapFocus);
+
+        // Restore focus
+        if (lastFocusedElement) {
+            lastFocusedElement.focus();
+        }
+
         // Collapse all expanded bios when closing
         modal.querySelectorAll('.conference-speaker-card.expanded').forEach(card => {
             card.classList.remove('expanded');
@@ -456,9 +521,8 @@ function openSpeakerBio(modalId, speakerId) {
             if (toggle) toggle.textContent = 'Read more ↓';
         });
         
-        // Open the modal
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        // Open the modal using the main function to handle focus
+        openModal(modalId);
         
         // Find and expand the specific speaker
         const speakerCard = document.getElementById(speakerId);
