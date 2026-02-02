@@ -26,6 +26,7 @@
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#editions">Previous Editions</a></li>
                 <li><a href="#register">Register</a></li>
+                <li><a href="#media">Media</a></li>
                 <li><a href="#initiators">Initiators</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -70,25 +71,25 @@
         <div class="carousel" id="heroCarousel">
             <div class="carousel-track">
                 <div class="carousel-slide" data-action="link" data-target="edition-2022">
-                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=600&fit=crop" alt="Conference atmosphere">
+                    <img src="public/images/events/2022/event-1.jpg" alt="SKY 2022 Conference">
                     <div class="slide-overlay">
                         <span>SKY 2022 • Gdańsk →</span>
                     </div>
                 </div>
                 <div class="carousel-slide" data-action="modal" data-target="speakersModal">
-                    <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1200&h=600&fit=crop" alt="Speaker on stage">
+                    <img src="public/images/events/2023/event-1.jpg" alt="SKY 2023 Speakers">
                     <div class="slide-overlay">
                         <span>Inspiring Speakers →</span>
                     </div>
                 </div>
                 <div class="carousel-slide" data-action="modal" data-target="workshopsModal">
-                    <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=1200&h=600&fit=crop" alt="Workshop session">
+                    <img src="public/images/events/2022/event-2.jpg" alt="SKY Workshops">
                     <div class="slide-overlay">
                         <span>Interactive Workshops →</span>
                     </div>
                 </div>
                 <div class="carousel-slide" data-action="link" data-target="edition-2023">
-                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1200&h=600&fit=crop" alt="Youth networking">
+                    <img src="public/images/events/2023/event-2.jpg" alt="SKY 2023 Conference">
                     <div class="slide-overlay">
                         <span>SKY 2023 • Wrocław →</span>
                     </div>
@@ -192,7 +193,7 @@
                         <p>On 14th May, we organised the first edition of SKY Conference in the well-known European Solidarity Centre in Gdańsk. All of our speakers showed us how they understand 'beyond' through their prism. It was a day full of emotions — we all learnt, laughed and enjoyed this day!</p>
                     </div>
                     <div class="edition-image">
-                        <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&h=400&fit=crop" alt="SKY 2022 Conference">
+                        <img src="public/images/events/2022/event-1.jpg" alt="SKY 2022 Conference">
                     </div>
                 </div>
                 
@@ -206,6 +207,7 @@
                             <img src="public/images/speakers/2022/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo">
                         </div>
                         <h5>Giuseppe Cataldo</h5>
+                        <span class="speaker-org">NASA</span>
                     </div>
                     <div class="speaker-card">
                         <div class="speaker-image">
@@ -216,9 +218,17 @@
                     </div>
                     <div class="speaker-card">
                         <div class="speaker-image">
+                            <img src="public/images/speakers/2022/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski">
+                        </div>
+                        <h5>Krzysztof Zajączkowski</h5>
+                        <span class="speaker-org">Drumduan School</span>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
                             <img src="public/images/speakers/2022/bogna-pazderska.jpg" alt="Bogna Pazderska">
                         </div>
                         <h5>Bogna Pazderska</h5>
+                        <span class="speaker-org">ESA Ambassador</span>
                     </div>
                     <div class="speaker-card">
                         <div class="speaker-image">
@@ -240,6 +250,30 @@
                         </div>
                         <h5>Tymoteusz Niewiarowski</h5>
                     </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2022/sara-jablonska.jpg" alt="Sara Jabłońska">
+                        </div>
+                        <h5>Sara Jabłońska</h5>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2022/urszula-wyrwinska.jpg" alt="Urszula Wyrwińska">
+                        </div>
+                        <h5>Urszula Wyrwińska</h5>
+                        <span class="speaker-org">Park On</span>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2022/jan-filip.jpg" alt="Jan Hofman & Filip Tłustochowicz">
+                        </div>
+                        <h5>Jan & Filip</h5>
+                        <span class="speaker-org">SCPL</span>
+                    </div>
+                </div>
+                
+                <div class="edition-cta">
+                    <button class="btn btn-secondary" onclick="openModal('sky2022Modal')">View All Speakers & Bios</button>
                 </div>
                 
                 <div class="edition-partners">
@@ -268,7 +302,7 @@
                         <p>SKY Conference united people again in an iconic cinema in Wrocław. We all took a look at gratitude — which was the topic of the conference. One more time, we had a chance to seek new knowledge, possibilities of growth and inspire one another.</p>
                     </div>
                     <div class="edition-image">
-                        <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&h=400&fit=crop" alt="SKY 2023 Conference">
+                        <img src="public/images/events/2023/event-1.jpg" alt="SKY 2023 Conference">
                     </div>
                 </div>
                 
@@ -282,18 +316,21 @@
                             <img src="public/images/speakers/2023/philip-zimbardo.jpg" alt="Prof. Philip Zimbardo">
                         </div>
                         <h5>Prof. Philip Zimbardo</h5>
+                        <span class="speaker-org">Stanford University</span>
                     </div>
                     <div class="speaker-card featured">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/tilda-swinton.jpg" alt="Tilda Swinton">
                         </div>
                         <h5>Tilda Swinton</h5>
+                        <span class="speaker-org">Oscar-winning Actress</span>
                     </div>
                     <div class="speaker-card">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo">
                         </div>
                         <h5>Giuseppe Cataldo</h5>
+                        <span class="speaker-org">NASA</span>
                     </div>
                     <div class="speaker-card">
                         <div class="speaker-image">
@@ -301,6 +338,57 @@
                         </div>
                         <h5>Małgorzata Szumowska</h5>
                     </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2023/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski">
+                        </div>
+                        <h5>Krzysztof Zajączkowski</h5>
+                        <span class="speaker-org">Drumduan School</span>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2023/julian-wasek.jpg" alt="Julian Wąsek">
+                        </div>
+                        <h5>Julian Wąsek</h5>
+                        <span class="speaker-org">School 2.0</span>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2023/atharva-dongre.jpg" alt="Atharva Dongre">
+                        </div>
+                        <h5>Atharva Dongre</h5>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2023/ewelina-cichon.jpg" alt="Dr Ewelina Cichoń">
+                        </div>
+                        <h5>Dr Ewelina Cichoń</h5>
+                        <span class="speaker-org">DSW</span>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2023/maksymilian-paczynski.jpg" alt="Maksymilian Paczyński">
+                        </div>
+                        <h5>Maksymilian Paczyński</h5>
+                        <span class="speaker-org">AI Innovator</span>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2023/jan-hofman.jpg" alt="Jan Hofman">
+                        </div>
+                        <h5>Jan Hofman</h5>
+                    </div>
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="public/images/speakers/2023/mikolaj-wojciech.jpg" alt="Mikołaj Hop & Wojciech Czyż">
+                        </div>
+                        <h5>Mikołaj & Wojciech</h5>
+                        <span class="speaker-org">AngielskiToMy</span>
+                    </div>
+                </div>
+                
+                <div class="edition-cta">
+                    <button class="btn btn-secondary" onclick="openModal('sky2023Modal')">View All Speakers & Bios</button>
                 </div>
                 
                 <div class="edition-partners">
@@ -385,6 +473,54 @@
         </div>
     </section>
 
+    <!-- Media Section -->
+    <section class="media" id="media">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Press Coverage</span>
+                <h2 class="section-title">SKY in the <span class="accent">Media</span></h2>
+                <p class="section-subtitle">See how SKY Conference has been featured in news and media</p>
+            </div>
+            
+            <div class="media-grid">
+                <!-- YouTube Video -->
+                <div class="media-card glass">
+                    <div class="media-embed">
+                        <iframe 
+                            src="https://www.youtube.com/embed/TBjcCeCkZ0w" 
+                            title="SKY Conference Video"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="media-info">
+                        <span class="media-source">YouTube</span>
+                        <h3>SKY Conference Highlight</h3>
+                        <p>Watch the highlights and hear from participants about their SKY experience.</p>
+                    </div>
+                </div>
+                
+                <!-- TVP Gdańsk Feature -->
+                <div class="media-card glass">
+                    <a href="https://gdansk.tvp.pl/59586088/12042022" target="_blank" rel="noopener noreferrer" class="media-link">
+                        <div class="media-thumbnail">
+                            <img src="public/images/media/sky-tv-2022.jpg" alt="SKY Conference on TVP Gdańsk">
+                            <div class="media-play-overlay">
+                                <span class="play-icon">▶</span>
+                            </div>
+                        </div>
+                        <div class="media-info">
+                            <span class="media-source">TVP Gdańsk</span>
+                            <h3>SKY Conference 2022 TV Feature</h3>
+                            <p>SKY Conference featured on regional Polish television, showcasing the impact of youth-led initiatives.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Initiators Section -->
     <section class="initiators" id="initiators">
         <div class="container">
@@ -395,30 +531,26 @@
             </div>
             
             <div class="initiators-grid">
-                <div class="initiator-card glass">
+                <div class="initiator-card glass clickable" onclick="openModal('katarzynaModal')">
                     <div class="initiator-image">
-                        <img src="public/images/initiators/katarzyna.jpg" alt="Katarzyna Chudziak">
+                        <img src="public/images/initiators/katarzyna.jpg" alt="Katarzyna Chudziah">
                         <div class="initiator-glow"></div>
                     </div>
                     <h3>Katarzyna Chudziak</h3>
                     <span class="initiator-role">Co-Founder & Initiator</span>
-                    <p>TEDx speaker and youngest spokesperson in Poland, Katarzyna has been a public speaker since age six. A world championship dancer and 2023 Wrocław Citizen of the Year (youngest recipient in history). She conducts workshops on soft skills and founded the Never Too Soon foundation to empower youth. Currently studying Global Arts, Culture & Politics at the University of Amsterdam.</p>
-                    <div class="initiator-social">
-                        <a href="mailto:skyyouthconference@gmail.com" aria-label="Email">Email</a>
-                    </div>
+                    <p>TEDx speaker, world championship dancer, and 2023 Wrocław Citizen of the Year. Founder of Never Too Soon foundation.</p>
+                    <span class="read-more-hint">Click to read full bio →</span>
                 </div>
                 
-                <div class="initiator-card glass">
+                <div class="initiator-card glass clickable" onclick="openModal('zuzannaModal')">
                     <div class="initiator-image">
                         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop" alt="Zuzanna Hofman">
                         <div class="initiator-glow"></div>
                     </div>
                     <h3>Zuzanna Hofman</h3>
                     <span class="initiator-role">Co-Founder & Initiator</span>
-                    <p>FLEX program scholarship recipient and psychology enthusiast dedicated to community well-being. Completed Yale's psychology course and is co-author of Well-being (Dobrostan) – First Aid within UNICEF V4. Active in Polish Children's Academy since 2011 and participated in multiple international Erasmus+ projects including ECA, CAPS, and PAPUS.</p>
-                    <div class="initiator-social">
-                        <a href="mailto:skyyouthconference@gmail.com" aria-label="Email">Email</a>
-                    </div>
+                    <p>FLEX scholarship recipient, psychology enthusiast, and UNICEF V4 Well-being project co-author.</p>
+                    <span class="read-more-hint">Click to read full bio →</span>
                 </div>
             </div>
             
@@ -504,18 +636,31 @@
             
             <h4 style="margin-bottom: 16px; color: var(--accent-primary);">SKY 2023 • Wrocław</h4>
             <div class="modal-speakers-grid">
-                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop" alt="Prof. Philip Zimbardo"></div><h5>Prof. Philip Zimbardo</h5></div>
-                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop" alt="Tilda Swinton"></div><h5>Tilda Swinton</h5></div>
-                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" alt="Giuseppe Cataldo"></div><h5>Giuseppe Cataldo</h5></div>
-                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&h=150&fit=crop" alt="Magdalena Szumowska"></div><h5>Magdalena Szumowska</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/philip-zimbardo.jpg" alt="Prof. Philip Zimbardo"></div><h5>Prof. Philip Zimbardo</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/tilda-swinton.jpg" alt="Tilda Swinton"></div><h5>Tilda Swinton</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo"></div><h5>Giuseppe Cataldo</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/malgorzata-szumowska.jpg" alt="Małgorzata Szumowska"></div><h5>Małgorzata Szumowska</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski"></div><h5>Krzysztof Zajączkowski</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/julian-wasek.jpg" alt="Julian Wąsek"></div><h5>Julian Wąsek</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/atharva-dongre.jpg" alt="Atharva Dongre"></div><h5>Atharva Dongre</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/ewelina-cichon.jpg" alt="Dr Ewelina Cichoń"></div><h5>Dr Ewelina Cichoń</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/maksymilian-paczynski.jpg" alt="Maksymilian Paczyński"></div><h5>Maksymilian Paczyński</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/jan-hofman.jpg" alt="Jan Hofman"></div><h5>Jan Hofman</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2023/mikolaj-wojciech.jpg" alt="Mikołaj Hop & Wojciech Czyż"></div><h5>Mikołaj & Wojciech</h5></div>
             </div>
             
             <h4 style="margin-bottom: 16px; margin-top: 32px; color: var(--accent-primary);">SKY 2022 • Gdańsk</h4>
             <div class="modal-speakers-grid">
-                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" alt="Giuseppe Cataldo"></div><h5>Giuseppe Cataldo</h5></div>
-                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop" alt="Ed Wollack"></div><h5>Ed Wollack (NASA)</h5></div>
-                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop" alt="Krzysztof Zajaczkowski"></div><h5>Krzysztof Zajączkowski</h5></div>
-                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop" alt="Magdalena Filcek"></div><h5>Magdalena Filcek</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo"></div><h5>Giuseppe Cataldo</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/ed-wollack.jpg" alt="Ed Wollack"></div><h5>Ed Wollack (NASA)</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski"></div><h5>Krzysztof Zajączkowski</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/magdalena-filcek.jpg" alt="Magdalena Filcek"></div><h5>Magdalena Filcek</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/bogna-pazderska.jpg" alt="Bogna Pazderska"></div><h5>Bogna Pazderska</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/jacek-koltan.jpg" alt="Jacek Kołtan"></div><h5>Jacek Kołtan</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/tymoteusz-niewiarowski.png" alt="Tymoteusz Niewiarowski"></div><h5>Tymoteusz Niewiarowski</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/sara-jablonska.jpg" alt="Sara Jabłońska"></div><h5>Sara Jabłońska</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/urszula-wyrwinska.jpg" alt="Urszula Wyrwińska"></div><h5>Urszula Wyrwińska</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="public/images/speakers/2022/jan-filip.jpg" alt="Jan Hofman & Filip Tłustochowicz"></div><h5>Jan & Filip</h5></div>
             </div>
             
             <div class="modal-cta">
@@ -551,6 +696,336 @@
             
             <div class="modal-cta">
                 <a href="#register" class="btn btn-primary" onclick="closeModal('workshopsModal')">Join a Workshop</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Katarzyna Chudziak Bio -->
+    <div class="modal-overlay" id="katarzynaModal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal">×</button>
+            <div class="initiator-modal-header">
+                <img src="public/images/initiators/katarzyna.jpg" alt="Katarzyna Chudziak" class="modal-initiator-img">
+                <div>
+                    <h3 class="modal-title">Katarzyna Chudziak</h3>
+                    <span class="initiator-role">Co-Founder & Initiator</span>
+                </div>
+            </div>
+            <div class="modal-bio">
+                <p>Kasia began gaining experience from a very young age. She started her journey with public speaking at the age of six, when she delivered a talk for 300 children aged 6–12. Since then, she has been frequently invited as a speaker to conferences, events, and the media.</p>
+                <p>One of her most important appearances was a TEDx talk in Leipzig, Germany, in 2020, where she presented the lecture "Polish Children's Academy – how do we break boundaries." She also served as the spokesperson for this project, becoming the youngest spokesperson in Poland.</p>
+                <p>She has been dancing for 15 years, during which time she has won numerous awards, including medals at world championships. Through dance, she learned teamwork, how to support peers during moments of failure, and how to celebrate victories together while showing respect for other participants.</p>
+                <p>In 2023, Katarzyna was awarded the title Wrocław Citizen of the Year. She won in the category Youth – The Strength of Youth. At the time, she was 17 years old, making her the youngest recipient in the history of this distinction.</p>
+                <p>For the past two years, she has been conducting workshops for company management boards as well as for primary and secondary school students, focusing on soft skills, self-presentation and team work.</p>
+                <p>During spring 2025 she created her own foundation Never Too Soon, which aims to support, empower, and enhance the personal growth of her peers. Her NGO also cooperates with other international organisations during Erasmus+ projects. Besides working on international projects as Never Too Soon foundation, she also coordinates Erasmus+ projects as part of her NGO work with the Era Psyche Foundation.</p>
+                <p>She is a student of Global Arts, Culture & Politics at the prestigious University of Amsterdam.</p>
+            </div>
+            <div class="modal-cta">
+                <a href="mailto:skyyouthconference@gmail.com" class="btn btn-primary" onclick="closeModal('katarzynaModal')">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Zuzanna Hofman Bio -->
+    <div class="modal-overlay" id="zuzannaModal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal">×</button>
+            <div class="initiator-modal-header">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop" alt="Zuzanna Hofman" class="modal-initiator-img">
+                <div>
+                    <h3 class="modal-title">Zuzanna Hofman</h3>
+                    <span class="initiator-role">Co-Founder & Initiator</span>
+                </div>
+            </div>
+            <div class="modal-bio">
+                <p>Zuzia has been passionate about psychology since childhood. She loves taking new initiatives and working for the benefit of the community, especially in the area of well-being.</p>
+                <p>She is a scholarship recipient of the FLEX program (Future Leaders Exchange Program), a finalist and ambassador of OFF (Our Future Foundation), and a two-time award recipient of the "Zdolni z Pomorza" program.</p>
+                <p>She completed Laurie Santos's course for psychology students at Yale. She is a co-author and ambassador of the project Well-being (Dobrostan) – First Aid within UNICEF V4.</p>
+                <p>Additionally, she participated in three international Erasmus+ projects: ECA, CAPS, and PAPUS.</p>
+                <p>Since 2011, she has been involved in the Polish Children's Academy (Polska Akademia Dzieci) project, giving lectures and volunteering.</p>
+            </div>
+            <div class="modal-cta">
+                <a href="mailto:skyyouthconference@gmail.com" class="btn btn-primary" onclick="closeModal('zuzannaModal')">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for SKY 2022 Conference Details -->
+    <div class="modal-overlay" id="sky2022Modal">
+        <div class="modal-content conference-modal">
+            <button class="modal-close" aria-label="Close modal">×</button>
+            <div class="conference-modal-header">
+                <h3 class="modal-title">SKY 2022 • Beyond</h3>
+                <div class="conference-meta">
+                    <span>14th May 2022</span>
+                    <span>European Solidarity Centre, Gdańsk</span>
+                </div>
+            </div>
+            
+            <p class="modal-description">The first edition of SKY Conference explored what it means to go "Beyond" — beyond limits, beyond expectations, beyond the ordinary. Our speakers shared their journeys of pushing boundaries in science, education, medicine, and personal growth.</p>
+            
+            <h4 class="modal-section-title">Speakers</h4>
+            <div class="conference-speakers-grid">
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo">
+                    <h5>Giuseppe Cataldo</h5>
+                    <span class="speaker-org">NASA</span>
+                    <p class="bio-summary">Head of backward planetary protection at NASA's Mars Sample Return mission and chief engineer of the EXCLAIM mission.</p>
+                    <div class="bio-full">
+                        <p>Giuseppe Cataldo is the head of backward planetary protection of the Mars Sample Return (MSR) Capture, Containment & Return System, as well as the chief engineer of NASA's EXCLAIM mission and the near-infrared camera NASA is contributing to the PRIME telescope.</p>
+                        <p>His expertise is in the design, testing and management of space systems, gained through 10+ years at NASA and earning his doctorate at the Massachusetts Institute of Technology (MIT). He has contributed to JWST, ATLAST (now LUVOIR), OSIRIS-REx, and Micro-X missions.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/ed-wollack.jpg" alt="Ed Wollack">
+                    <h5>Ed Wollack</h5>
+                    <span class="speaker-org">NASA</span>
+                    <p class="bio-summary">NASA researcher focusing on precision imaging systems for astrophysics and cosmology.</p>
+                    <div class="bio-full">
+                        <p>Dr. Wollack's research concentrates on the development and use of precision imaging systems for astrophysics and cosmology. He has contributed to the design, fabrication, and characterization of sensors, waveguide structures, optics, and other components for ground, balloon, and space-based applications.</p>
+                        <p>Research areas: Cosmic Microwave Background (spectrum, anisotropy, polarization, dark energy), Astrophysical Observations, and Instrumentation.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski">
+                    <h5>Krzysztof Zajączkowski</h5>
+                    <span class="speaker-org">Drumduan School</span>
+                    <p class="bio-summary">Co-founder of Drumduan School with Tilda Swinton, educator and speaker on educational renewal.</p>
+                    <div class="bio-full">
+                        <p>Born in England to Polish parents, Krzysztof has lived in the Highlands of Scotland for over 35 years. In 2015, he opened a successful independent high school with actress Tilda Swinton which drew attention from the Scottish government.</p>
+                        <p>He was invited to the Queen's Garden Party and has given talks on educational renewal in New Zealand, India, Mexico, Taiwan, and around Europe. Apart from being a headteacher, he specializes in making clay pizza ovens, Canadian canoes, and hand-forged knives with students.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/bogna-pazderska.jpg" alt="Bogna Pazderska">
+                    <h5>Bogna Pazderska</h5>
+                    <span class="speaker-org">ESA Ambassador</span>
+                    <p class="bio-summary">Astronomer and ESA Space Ambassador, astronomy education specialist at Hevelianum.</p>
+                    <div class="bio-full">
+                        <p>An astronomer by education, involved in space education for many years. Currently an astronomy education specialist at Gdańsk science center Hevelianum and originator of the nationwide astronautics competition "W stronę gwiazd."</p>
+                        <p>Since 2017, a Space Ambassador for the European Space Agency (ESA) Education Office, promoting careers in the space sector. Regular publisher of articles on astronomy and outer space.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/magdalena-filcek.jpg" alt="Magdalena Filcek">
+                    <h5>Magdalena Filcek</h5>
+                    <span class="speaker-org">Vinci Power-Nap</span>
+                    <p class="bio-summary">Honorary NASA employee, neuroarchitecture specialist, innovator of patented projects.</p>
+                    <div class="bio-full">
+                        <p>Honorary NASA employee, specialist in neuroarchitecture, scientist, artist, designer, and hot air balloon pilot. Creator of the Vinci Power Nap® technology system. Awarded Grand Prix 2002 from the President of Poland for best diploma project.</p>
+                        <p>Author of global projects and discoveries focusing on health, environment, education, innovation, and space missions. Her goal is to help save millions of lives and improve wellbeing across the globe and beyond.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/jacek-koltan.jpg" alt="Jacek Kołtan">
+                    <h5>Jacek Kołtan</h5>
+                    <span class="speaker-org">European Solidarity Centre</span>
+                    <p class="bio-summary">Philosopher and political scientist, Director's Representative for Academic Affairs at ECS.</p>
+                    <div class="bio-full">
+                        <p>A philosopher and political scientist, studied at Adam Mickiewicz University in Poznań and Humboldt University of Berlin. Earned PhD in social philosophy at the Free University of Berlin.</p>
+                        <p>Research interests include contemporary social and political theory, hermeneutics, philosophical anthropology, and phenomenology. Lectures at the Academy of Fine Arts in Gdańsk and College of Artes Liberales at University of Warsaw.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/tymoteusz-niewiarowski.png" alt="Tymoteusz Niewiarowski">
+                    <h5>Tymoteusz Niewiarowski</h5>
+                    <p class="bio-summary">14-year-old TEDx speaker from Leipzig, interested in geopolitics and nuclear energy.</p>
+                    <div class="bio-full">
+                        <p>Student at Gdynia Social School, interested in football, geopolitics, and nuclear power plants. Delivered several lectures for Gdańsk University of Technology and Medical University of Gdańsk as part of the PAD program. TEDx speaker in Leipzig.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/sara-jablonska.jpg" alt="Sara Jabłońska">
+                    <h5>Sara Jabłońska</h5>
+                    <p class="bio-summary">15-year-old public speaking champion, volunteer at European Solidarity Centre.</p>
+                    <div class="bio-full">
+                        <p>At 15 years old, she has been intensively developing public speaking skills, winning regional and national contests. Long-time volunteer at the European Solidarity Centre. Interested in language learning, business, and traveling.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/urszula-wyrwinska.jpg" alt="Urszula Wyrwińska">
+                    <h5>Urszula Wyrwińska</h5>
+                    <span class="speaker-org">Park On Association</span>
+                    <p class="bio-summary">Pediatrician and founder of Park On Association for people with Parkinson's disease.</p>
+                    <div class="bio-full">
+                        <p>Graduate of Medical Academy in Gdańsk, worked as a pediatrician for over 30 years. After being diagnosed with Parkinson's disease, established the Park On Association in 2019 for people with Parkinson's and their caregivers.</p>
+                        <p>The association offers free art therapy, physical exercise, Tai Chi, and psychological workshops. Organized Poland's first Dance for PD course with David Leventhal from New York.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2022/jan-filip.jpg" alt="Jan Hofman & Filip Tłustochowicz">
+                    <h5>Jan & Filip</h5>
+                    <span class="speaker-org">SCPL</span>
+                    <p class="bio-summary">Teen entrepreneurs who founded Poland's largest fashion-focused Facebook group.</p>
+                    <div class="bio-full">
+                        <p>Filip Tłustochowicz (17) and Jan Hofman (16) are interested in economics, business, and online communities. Three years ago, they founded one of Poland's largest fashion-focused Facebook groups.</p>
+                        <p>Also interested in cryptocurrencies and NFTs, they launched a clothing brand which they presented at the conference.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for SKY 2023 Conference Details -->
+    <div class="modal-overlay" id="sky2023Modal">
+        <div class="modal-content conference-modal">
+            <button class="modal-close" aria-label="Close modal">×</button>
+            <div class="conference-modal-header">
+                <h3 class="modal-title">SKY 2023 • Gratitude</h3>
+                <div class="conference-meta">
+                    <span>9-10th March 2023</span>
+                    <span>Kino Nowe Horyzonty, Wrocław</span>
+                </div>
+            </div>
+            
+            <p class="modal-description">The second edition brought together world-renowned speakers to explore the theme of "Gratitude" — examining how appreciation and thankfulness can transform our lives, relationships, and communities.</p>
+            
+            <h4 class="modal-section-title">Speakers</h4>
+            <div class="conference-speakers-grid">
+                <div class="conference-speaker-card featured" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/philip-zimbardo.jpg" alt="Prof. Philip Zimbardo">
+                    <h5>Prof. Philip Zimbardo</h5>
+                    <span class="speaker-org">Stanford University</span>
+                    <p class="bio-summary">World-renowned psychologist, professor emeritus at Stanford, creator of the Stanford Prison Experiment.</p>
+                    <div class="bio-full">
+                        <p>Professor Philip Zimbardo is a world-known American social psychologist and professor emeritus at Stanford University, one of the most influential figures in modern psychology.</p>
+                        <p>Best known for the Stanford Prison Experiment, his work focuses on situational forces' impact on morality and ethics, summarized in his concept of the Lucifer Effect. Founder of the Heroic Imagination Project, promoting ethical action and social responsibility.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card featured" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/tilda-swinton.jpg" alt="Tilda Swinton">
+                    <h5>Tilda Swinton</h5>
+                    <span class="speaker-org">Oscar-winning Actress</span>
+                    <p class="bio-summary">British actress, Oscar winner, co-founder of Drumduan School in Scotland.</p>
+                    <div class="bio-full">
+                        <p>British actress, winner of many film awards including an Oscar, BAFTA, and several Golden Globes. Known for The Chronicles of Narnia as the White Witch. Co-founder of innovative Drumduan School in Scotland.</p>
+                        <p>Graduate of University of Cambridge. Performed on theatre stages during student years. Has worked alongside stars like Timothée Chalamet, Leonardo DiCaprio, Tom Cruise, Brad Pitt, and Cate Blanchett.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo">
+                    <h5>Giuseppe Cataldo</h5>
+                    <span class="speaker-org">NASA</span>
+                    <p class="bio-summary">NASA engineer returning for the second year to share his space exploration journey.</p>
+                    <div class="bio-full">
+                        <p>Returning speaker from SKY 2022, Giuseppe continued to inspire with his work on Mars Sample Return and other NASA missions. His expertise spans space systems design, testing, and management with 10+ years at NASA and a doctorate from MIT.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/malgorzata-szumowska.jpg" alt="Małgorzata Szumowska">
+                    <h5>Małgorzata Szumowska</h5>
+                    <p class="bio-summary">Mother, wife, activist, educator, and vision enthusiast with a passion for words.</p>
+                    <div class="bio-full">
+                        <p>A mother, wife, friend, activist, and educator. Vegetarian for 20 years, vision enthusiast with a collection of 27 pairs of glasses. Never goes anywhere without her Kindle.</p>
+                        <p>Loves playing with words—written or spoken. Despite hearing difficulties, adores music, especially Polish jazz and 1980s-90s sounds.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski">
+                    <h5>Krzysztof Zajączkowski</h5>
+                    <span class="speaker-org">Drumduan School</span>
+                    <p class="bio-summary">Returning to share more insights on educational innovation and the Drumduan approach.</p>
+                    <div class="bio-full">
+                        <p>Returning speaker from SKY 2022, continuing to share his vision for educational renewal and experiences from running Drumduan School with Tilda Swinton in the Scottish Highlands.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/julian-wasek.jpg" alt="Julian Wąsek">
+                    <h5>Julian Wąsek</h5>
+                    <span class="speaker-org">School 2.0 Foundation</span>
+                    <p class="bio-summary">At 18, founded School 2.0 Foundation to transform Polish education. Forbes 25 under 25.</p>
+                    <div class="bio-full">
+                        <p>At the age of 18, founded the School 2.0 Foundation to change the Polish education system while still a student. Listed by FORBES magazine on the 25 under 25 list.</p>
+                        <p>Trainer of quick learning techniques, long-time social worker, and educational visionary.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/atharva-dongre.jpg" alt="Atharva Dongre">
+                    <h5>Atharva Dongre</h5>
+                    <p class="bio-summary">16-year-old from India, sharing his cross-cultural journey from Mumbai to Wrocław.</p>
+                    <div class="bio-full">
+                        <p>Originally from India, spent first 12 years in Mumbai suburbs before moving to Bangalore, then Wrocław. Now studying IGCSE at IPS Upper Secondary School.</p>
+                        <p>Loves reading and writing screenplays and fictional dramas. Passionate about badminton and cross-country training. Dreams of working as a digital nomad to understand cultural differences.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/ewelina-cichon.jpg" alt="Dr Ewelina Cichoń">
+                    <h5>Dr Ewelina Cichoń</h5>
+                    <span class="speaker-org">DSW / Ministry of Health</span>
+                    <p class="bio-summary">Psychology graduate specializing in health psychology and cognitive psychology.</p>
+                    <div class="bio-full">
+                        <p>Graduate of Psychology at SWPS University in Wrocław. Participated in research projects on psychopathological symptoms and Polish versions of psychological assessment tools.</p>
+                        <p>Since 2021, collaborates with Department of Analyses and Strategy at Ministry of Health. Supervisor of FLOW Psychology Student Research Group at DSW since 2019.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/maksymilian-paczynski.jpg" alt="Maksymilian Paczyński">
+                    <h5>Maksymilian Paczyński</h5>
+                    <span class="speaker-org">AI Innovator</span>
+                    <p class="bio-summary">Intel AI competition winner, creator of FATIK, Personality of the Republic 2022.</p>
+                    <div class="bio-full">
+                        <p>International winner of Intel's global Artificial Intelligence competition, creator of the FATIK program. Named Personality of the Republic of Poland 2022 for significant contribution to digital transformation.</p>
+                        <p>Digital Shapers 2021, member of Children and Youth Council at Ministry of Education and Science, finalist in numerous mathematics competitions.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/jan-hofman.jpg" alt="Jan Hofman">
+                    <h5>Jan Hofman</h5>
+                    <p class="bio-summary">Returning speaker, continuing to share entrepreneurial insights and experiences.</p>
+                    <div class="bio-full">
+                        <p>Returning from SKY 2022, Jan continued to share his journey in entrepreneurship, fashion, and online community building.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
+                
+                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                    <img src="public/images/speakers/2023/mikolaj-wojciech.jpg" alt="Mikołaj Hop & Wojciech Czyż">
+                    <h5>Mikołaj & Wojciech</h5>
+                    <span class="speaker-org">AngielskiToMy</span>
+                    <p class="bio-summary">Founders of innovative language school, reaching 45,000+ students with matura prep.</p>
+                    <div class="bio-full">
+                        <p>Founders of one of Poland's most innovative language schools. Within 10 months, their matura live streams on Facebook were viewed by 45,000+ people and sold around 1,200 original matura e-books.</p>
+                        <p>Built a team of 13 teachers at AngielskiToMy. Mikołaj studies Law at Jagiellonian University; Wojciech studies dentistry at Medical University of Silesia.</p>
+                    </div>
+                    <span class="read-more-toggle">Read more ↓</span>
+                </div>
             </div>
         </div>
     </div>

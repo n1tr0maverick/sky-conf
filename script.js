@@ -424,6 +424,16 @@ function closeModal(modalId) {
     }
 }
 
+// Toggle bio expansion in conference modals
+function toggleBio(card) {
+    card.classList.toggle('expanded');
+    const toggle = card.querySelector('.read-more-toggle');
+    if (toggle) {
+        toggle.textContent = card.classList.contains('expanded') ? 'Show less' : 'Read more ↓';
+    }
+}
+
 // Make functions globally available for inline onclick handlers
 window.openModal = openModal;
 window.closeModal = closeModal;
+window.toggleBio = toggleBio;
