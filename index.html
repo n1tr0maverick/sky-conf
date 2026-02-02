@@ -70,28 +70,28 @@
     <section class="carousel-section">
         <div class="carousel" id="heroCarousel">
             <div class="carousel-track">
-                <div class="carousel-slide">
+                <div class="carousel-slide" data-action="link" data-target="edition-2022">
                     <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=600&fit=crop" alt="Conference atmosphere">
                     <div class="slide-overlay">
-                        <span>SKY 2022 • Gdańsk</span>
+                        <span>SKY 2022 • Gdańsk →</span>
                     </div>
                 </div>
-                <div class="carousel-slide">
+                <div class="carousel-slide" data-action="modal" data-target="speakersModal">
                     <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1200&h=600&fit=crop" alt="Speaker on stage">
                     <div class="slide-overlay">
-                        <span>Inspiring Speakers</span>
+                        <span>Inspiring Speakers →</span>
                     </div>
                 </div>
-                <div class="carousel-slide">
+                <div class="carousel-slide" data-action="modal" data-target="workshopsModal">
                     <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=1200&h=600&fit=crop" alt="Workshop session">
                     <div class="slide-overlay">
-                        <span>Interactive Workshops</span>
+                        <span>Interactive Workshops →</span>
                     </div>
                 </div>
-                <div class="carousel-slide">
+                <div class="carousel-slide" data-action="link" data-target="edition-2023">
                     <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1200&h=600&fit=crop" alt="Youth networking">
                     <div class="slide-overlay">
-                        <span>SKY 2023 • Wrocław</span>
+                        <span>SKY 2023 • Wrocław →</span>
                     </div>
                 </div>
             </div>
@@ -201,6 +201,9 @@
                     </div>
                 </div>
                 
+                <div class="edition-context-bar">
+                    <span class="edition-context-badge">SKY 2022 • Beyond • Gdańsk</span>
+                </div>
                 <h4 class="speakers-title">Our Speakers</h4>
                 <div class="speakers-grid">
                     <div class="speaker-card">
@@ -276,6 +279,9 @@
                     </div>
                 </div>
                 
+                <div class="edition-context-bar">
+                    <span class="edition-context-badge">SKY 2023 • Gratitude • Wrocław</span>
+                </div>
                 <h4 class="speakers-title">Our Speakers</h4>
                 <div class="speakers-grid">
                     <div class="speaker-card featured">
@@ -337,6 +343,16 @@
                         <div class="partner-logo glass">Dolnośląska Szkoła Wyższa</div>
                     </div>
                 </div>
+                
+                <div class="edition-gallery">
+                    <h4>Gallery</h4>
+                    <div class="gallery-grid">
+                        <div class="gallery-item featured-gallery">
+                            <img src="public/images/invsbl-family.jpg" alt="INVSBL Family at SKY 2023" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop'; this.alt='Awaiting INVSBL Family photo';">
+                            <span class="gallery-caption">INVSBL Family</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -356,7 +372,9 @@
             
             <div class="register-cards">
                 <div class="register-card glass">
-                    <div class="register-icon"></div>
+                    <div class="register-image">
+                        <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&h=250&fit=crop" alt="Speaker at SKY Conference">
+                    </div>
                     <h3>Be a Speaker</h3>
                     <p>Share your knowledge, experience, and story with hundreds of young minds eager to learn and be inspired.</p>
                     <ul class="register-perks">
@@ -369,7 +387,9 @@
                 
                 <div class="register-card glass featured">
                     <div class="featured-badge">Most Popular</div>
-                    <div class="register-icon"></div>
+                    <div class="register-image">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400&h=250&fit=crop" alt="Participants at SKY Conference">
+                    </div>
                     <h3>Be a Participant</h3>
                     <p>Join us for an unforgettable experience filled with inspiration, learning, and meaningful connections.</p>
                     <ul class="register-perks">
@@ -381,7 +401,9 @@
                 </div>
                 
                 <div class="register-card glass">
-                    <div class="register-icon"></div>
+                    <div class="register-image">
+                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=250&fit=crop" alt="Volunteers at SKY Conference">
+                    </div>
                     <h3>Be a Volunteer</h3>
                     <p>Become part of the team behind the magic. Help us create an incredible experience for everyone.</p>
                     <ul class="register-perks">
@@ -462,8 +484,8 @@
                             <div class="method-icon"></div>
                             <div class="method-details">
                                 <h4>Phone</h4>
-                                <p>Katarzyna: <a href="tel:+48663176020">+48 663 176 020</a></p>
-                                <p>Zuzanna: <a href="tel:+48537732237">+48 537 732 237</a></p>
+                                <p>Katarzyna Chudziak: <a href="tel:+48663176020">+48 663 176 020</a></p>
+                                <p>Zuzanna Hofman: <a href="tel:+48537732237">+48 537 732 237</a></p>
                             </div>
                         </div>
                     </div>
@@ -505,6 +527,66 @@
             </div>
         </div>
     </footer>
+
+    <!-- Modal for Interactive Carousel - Speakers -->
+    <div class="modal-overlay" id="speakersModal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal">×</button>
+            <h3 class="modal-title">All SKY Speakers</h3>
+            <p class="modal-description">Over the past editions, SKY Conference has hosted incredible speakers who shared their knowledge, passion, and stories. From scientists and artists to entrepreneurs and changemakers – our speakers embody the spirit of going beyond limits.</p>
+            
+            <h4 style="margin-bottom: 16px; color: var(--accent-primary);">SKY 2023 • Wrocław</h4>
+            <div class="modal-speakers-grid">
+                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop" alt="Prof. Philip Zimbardo"></div><h5>Prof. Philip Zimbardo</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop" alt="Tilda Swinton"></div><h5>Tilda Swinton</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" alt="Giuseppe Cataldo"></div><h5>Giuseppe Cataldo</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&h=150&fit=crop" alt="Magdalena Szumowska"></div><h5>Magdalena Szumowska</h5></div>
+            </div>
+            
+            <h4 style="margin-bottom: 16px; margin-top: 32px; color: var(--accent-primary);">SKY 2022 • Gdańsk</h4>
+            <div class="modal-speakers-grid">
+                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" alt="Giuseppe Cataldo"></div><h5>Giuseppe Cataldo</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop" alt="Ed Wollack"></div><h5>Ed Wollack (NASA)</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop" alt="Krzysztof Zajaczkowski"></div><h5>Krzysztof Zajączkowski</h5></div>
+                <div class="speaker-card"><div class="speaker-image"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop" alt="Magdalena Filcek"></div><h5>Magdalena Filcek</h5></div>
+            </div>
+            
+            <div class="modal-cta">
+                <a href="#register" class="btn btn-primary" onclick="closeModal('speakersModal')">Become a Speaker</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Interactive Carousel - Workshops -->
+    <div class="modal-overlay" id="workshopsModal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal">×</button>
+            <h3 class="modal-title">Interactive Workshops</h3>
+            <p class="modal-description">SKY Conference isn't just about listening – it's about doing. Our interactive workshops give participants hands-on experience, practical skills, and the chance to collaborate with peers from around the world.</p>
+            
+            <div class="aim-cards" style="margin-bottom: 32px;">
+                <div class="aim-card">
+                    <div class="aim-number">→</div>
+                    <h4>Hands-On Learning</h4>
+                    <p>Move beyond theory into practice with workshops designed to teach real skills you can apply immediately.</p>
+                </div>
+                <div class="aim-card">
+                    <div class="aim-number">→</div>
+                    <h4>Small Group Sessions</h4>
+                    <p>Intimate settings that allow for meaningful interaction, questions, and personalized guidance from experts.</p>
+                </div>
+                <div class="aim-card">
+                    <div class="aim-number">→</div>
+                    <h4>Diverse Topics</h4>
+                    <p>From creative arts to technology, from leadership to mindfulness – there's something for everyone.</p>
+                </div>
+            </div>
+            
+            <div class="modal-cta">
+                <a href="#register" class="btn btn-primary" onclick="closeModal('workshopsModal')">Join a Workshop</a>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

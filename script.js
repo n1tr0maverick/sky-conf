@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initEditionTabs();
     initSmoothScroll();
     initScrollAnimations();
+    initModals();
 });
 
 // ===== Navbar Scroll Effect =====
@@ -134,6 +135,48 @@ function initCarousel() {
     // Pause on hover
     carousel.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
     carousel.addEventListener('mouseleave', startAutoplay);
+    
+    // Interactive slide clicks
+    slides.forEach(slide => {
+        slide.addEventListener('click', () => {
+            const action = slide.dataset.action;
+            const target = slide.dataset.target;
+            
+            if (action === 'modal') {
+                openModal(target);
+            } else if (action === 'link') {
+                // Switch to the edition tab and scroll
+                const tabs = document.querySelectorAll('.tab-btn');
+                const contents = document.querySelectorAll('.edition-content');
+                const edition = target.replace('edition-', '');
+                
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    if (t.dataset.edition === edition) {
+                        t.classList.add('active');
+                    }
+                });
+                
+                contents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === target) {
+                        content.classList.add('active');
+                    }
+                });
+                
+                // Scroll to editions section
+                const editionsSection = document.getElementById('editions');
+                if (editionsSection) {
+                    const offset = 80;
+                    const targetPosition = editionsSection.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
 }
 
 // ===== Edition Tabs =====
@@ -269,3 +312,54 @@ function animateCounter(element, target, duration = 2000) {
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
+
+// ===== Modal Functions =====
+function initModals() {
+    // Close modal when clicking overlay
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal(modal.id);
+            }
+        });
+    });
+    
+    // Close modal with close button
+    document.querySelectorAll('.modal-close').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modal = btn.closest('.modal-overlay');
+            if (modal) {
+                closeModal(modal.id);
+            }
+        });
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                closeModal(modal.id);
+            });
+        }
+    });
+}
+
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Make functions globally available for inline onclick handlers
+window.openModal = openModal;
+window.closeModal = closeModal;

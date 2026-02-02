@@ -189,3 +189,83 @@ Profile cards for each initiator:
 - Mobile responsive
 - Carousel/slider for event photos
 - Clean navigation structure
+
+---
+
+## Feedback & Revisions (February 2026)
+
+### 1. About Us Section - Emoji Changes
+**Status:** Pending
+- Current: Uses emoji icons (🌍, 🔗, 💫) for the three about cards
+- Request: Replace with different, more suitable icons (user to specify preference)
+- Note: Awaiting user's preferred icon style/selection
+
+### 2. Edition Sections (SKY 2022 & 2023) - Emoji Changes  
+**Status:** Pending
+- Current: Uses emojis (📅, 📍, 🎯) for date/location/theme metadata
+- Request: Replace with simpler icons
+- Note: Awaiting user's example for preferred style
+
+### 3. SKY 2023 - INVSBL Family Photo
+**Status:** Pending
+- Request: Add 'invsbl family' photo to SKY 2023 section
+- Location: /public/images/invsbl-family.jpg (awaiting upload)
+
+### 4. Edition Context Clarity When Scrolling
+**Status:** To Implement
+- Issue: Users may not realize speakers/sponsors shown belong to a specific edition when scrolling
+- Solution Options:
+  - Add sticky edition indicator header that stays visible while scrolling
+  - Add edition badge/label near speaker grids and sponsor sections
+  - Visual differentiation between editions with colors/themes
+- Note: Awaiting user's visual reference/sketch
+
+### 5. Registration Section - Replace Emojis with Photos
+**Status:** Pending
+- Current: Uses emoji icons (🎤, 🎫, 🤝) for speaker/participant/volunteer cards
+- Request: Replace with actual photos from previous editions showing:
+  - "Be a Speaker" → Photo of a speaker from previous edition
+  - "Be a Participant" → Photo of participants
+  - "Be a Volunteer" → Photo of volunteers
+- Note: Awaiting photo uploads
+
+### 6. Contact Section - Add Surnames
+**Status:** ✅ Implemented
+- Request: Add full names to contact section
+- Change: "Katarzyna" → "Katarzyna Chudziak", "Zuzanna" → "Zuzanna Hofman"
+
+### 7. Interactive Carousel Feature
+**Status:** To Implement
+- Current: Carousel auto-scrolls through images with manual navigation
+- Request: Make carousel items clickable to open relevant sections:
+  - "Interactive Workshops" → Opens workshops section with details and photos
+  - "Inspiring Speakers" → Opens all speakers from all editions + "Become a Speaker" button
+  - Edition slides → Could link to respective edition sections
+- Implementation needs:
+  - Add click handlers to carousel slides
+  - Create expanded content sections/modals for each carousel item
+  - Add "All Speakers" compilation section
+  - Add workshop highlight section
+
+---
+
+## Assets Required (Updated)
+
+### Images
+- [ ] SKY Conference logo
+- [ ] SKY '26 teaser graphics
+- [ ] Carousel images from previous editions
+- [ ] SKY 2022 event photos
+- [ ] SKY 2023 event photos
+- [ ] **INVSBL Family photo** (for SKY 2023 section)
+- [ ] Speaker headshots (all editions)
+- [ ] Initiator photos
+- [ ] Sponsor/partner logos
+- [ ] **Speaker photo** (for "Be a Speaker" registration card)
+- [ ] **Participants photo** (for "Be a Participant" registration card)
+- [ ] **Volunteers photo** (for "Be a Volunteer" registration card)
+
+### External Links
+- [ ] Speaker registration form URL
+- [ ] Participant registration form URL
+- [ ] Volunteer registration form URL
