@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initEditionTabs();
     initSmoothScroll();
     initScrollAnimations();
+    initOptimizedScrollHandlers();
     initModals();
     
     // Initialize language toggle (from translations.js)
@@ -328,37 +329,47 @@ function initScrollAnimations() {
     }, 50);
 }
 
-// ===== Active Navigation Highlight =====
-window.addEventListener('scroll', () => {
+// ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
+function initOptimizedScrollHandlers() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
-    
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        if (window.scrollY >= sectionTop) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// ===== Parallax Effect for Orbs =====
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
     const orbs = document.querySelectorAll('.gradient-orb');
     
-    orbs.forEach((orb, index) => {
-        const speed = 0.1 * (index + 1);
-        orb.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
+    let ticking = false;
+    
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.scrollY;
+
+                // Active Navigation Highlight
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (scrolled >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Parallax Effect
+                orbs.forEach((orb, index) => {
+                    const speed = 0.1 * (index + 1);
+                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+}
 
 // ===== Counter Animation for Statistics (if added) =====
 function animateCounter(element, target, duration = 2000) {
