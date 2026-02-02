@@ -125,8 +125,9 @@ img {
 }
 
 .logo-img {
-    height: 50px;
+    height: 40px;
     width: auto;
+    max-width: 120px;
     object-fit: contain;
     transition: var(--transition-medium);
 }
