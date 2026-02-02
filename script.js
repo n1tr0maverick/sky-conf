@@ -333,7 +333,7 @@ function initScrollAnimations() {
 function initOptimizedScrollHandlers() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
-    const orbs = document.querySelectorAll('.gradient-orb');
+    const orbs = document.querySelectorAll('.orb-wrapper');
     
     let ticking = false;
     
@@ -361,7 +361,7 @@ function initOptimizedScrollHandlers() {
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
                     const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    orb.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
                 });
 
                 ticking = false;
