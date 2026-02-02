@@ -204,6 +204,41 @@ img {
     transition: var(--transition-medium);
 }
 
+/* Language Toggle */
+.lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: var(--transition-medium);
+    margin-left: 20px;
+}
+
+.lang-toggle:hover {
+    border-color: var(--accent-primary);
+    background: rgba(14, 165, 233, 0.1);
+}
+
+.lang-option {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+}
+
+.lang-option.active {
+    color: var(--accent-primary);
+}
+
+.lang-separator {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
 /* ===== Hero Section ===== */
 .hero {
     min-height: 100vh;
@@ -883,6 +918,22 @@ img {
 .speaker-card:hover {
     transform: translateY(-8px);
     border-color: var(--accent-primary);
+    box-shadow: var(--accent-glow);
+}
+
+.speaker-card[onclick]:hover::after {
+    content: 'View Bio';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: var(--accent-primary);
+    opacity: 0.8;
+}
+
+.speaker-card[onclick] {
+    position: relative;
 }
 
 .speaker-card.featured {
@@ -1656,6 +1707,13 @@ img {
     
     .mobile-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(5px, -5px);
+    }
+    
+    .lang-toggle {
+        position: absolute;
+        top: 20px;
+        right: 70px;
+        margin-left: 0;
     }
     
     .aim-cards {

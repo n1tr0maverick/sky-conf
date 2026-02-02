@@ -23,13 +23,18 @@
                 <span></span>
             </button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#editions">Previous Editions</a></li>
-                <li><a href="#register">Register</a></li>
-                <li><a href="#media">Media</a></li>
-                <li><a href="#initiators">Initiators</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about" data-i18n="nav.about">About Us</a></li>
+                <li><a href="#editions" data-i18n="nav.editions">Previous Editions</a></li>
+                <li><a href="#register" data-i18n="nav.register">Register</a></li>
+                <li><a href="#media" data-i18n="nav.media">Media</a></li>
+                <li><a href="#initiators" data-i18n="nav.initiators">Initiators</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
+            <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
+                <span class="lang-option active" data-lang="en">EN</span>
+                <span class="lang-separator">/</span>
+                <span class="lang-option" data-lang="pl">PL</span>
+            </button>
         </div>
     </nav>
 
@@ -44,25 +49,25 @@
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="pulse"></span>
-                <span>Coming Soon</span>
+                <span data-i18n="hero.badge">Coming Soon</span>
             </div>
             <h1 class="hero-title">
                 <span class="title-line">SKY</span>
                 <span class="title-line accent">Conference</span>
                 <span class="title-line year">'26</span>
             </h1>
-            <p class="hero-subtitle">Sky is not the limit</p>
-            <p class="hero-description">An international event organised by youth, for youth. Where inspiration flows in a full circle.</p>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Sky is not the limit</p>
+            <p class="hero-description" data-i18n="hero.description">An international event organised by youth, for youth. Where inspiration flows in a full circle.</p>
             <div class="hero-cta">
-                <a href="#register" class="btn btn-primary">Join Us</a>
-                <a href="#about" class="btn btn-secondary">Learn More</a>
+                <a href="#register" class="btn btn-primary" data-i18n="hero.join">Join Us</a>
+                <a href="#about" class="btn btn-secondary" data-i18n="hero.learn">Learn More</a>
             </div>
         </div>
         <div class="scroll-indicator">
             <div class="mouse">
                 <div class="wheel"></div>
             </div>
-            <span>Scroll to explore</span>
+            <span data-i18n="hero.scroll">Scroll to explore</span>
         </div>
     </section>
 
@@ -79,13 +84,13 @@
                 <div class="carousel-slide" data-action="modal" data-target="speakersModal">
                     <img src="public/images/events/2023/event-4.jpg" alt="SKY Speakers">
                     <div class="slide-overlay">
-                        <span>Inspiring Speakers →</span>
+                        <span data-i18n="carousel.speakers">Inspiring Speakers →</span>
                     </div>
                 </div>
                 <div class="carousel-slide" data-action="modal" data-target="workshopsModal">
                     <img src="public/images/events/2022/event-2.jpg" alt="SKY Workshops">
                     <div class="slide-overlay">
-                        <span>Interactive Workshops →</span>
+                        <span data-i18n="carousel.workshops">Interactive Workshops →</span>
                     </div>
                 </div>
                 <div class="carousel-slide" data-action="link" data-target="edition-2023">
@@ -105,22 +110,22 @@
     <section class="about" id="about">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Who We Are</span>
-                <h2 class="section-title">About <span class="accent">SKY</span> Conference</h2>
+                <span class="section-tag" data-i18n="about.tag">Who We Are</span>
+                <h2 class="section-title" data-i18n="about.title">About <span class="accent">SKY</span> Conference</h2>
             </div>
             <div class="about-grid">
                 <div class="about-content">
                     <div class="about-card glass">
-                        <h3>International Community</h3>
-                        <p>SKY Conference is an international event organised by youth and for youth. What started as a bold idea has grown into a safe space where teenagers and young adults from different countries and backgrounds come together to inspire one another.</p>
+                        <h3 data-i18n="about.card1.title">International Community</h3>
+                        <p data-i18n="about.card1.text">SKY Conference is an international event organised by youth and for youth. What started as a bold idea has grown into a safe space where teenagers and young adults from different countries and backgrounds come together to inspire one another.</p>
                     </div>
                     <div class="about-card glass">
-                        <h3>Connecting Minds</h3>
-                        <p>SKY connects students, educators, scientists, artists, and changemakers who are not afraid to cross boundaries and challenge the status quo. Our events combine inspiring keynote talks with interactive workshops.</p>
+                        <h3 data-i18n="about.card2.title">Connecting Minds</h3>
+                        <p data-i18n="about.card2.text">SKY connects students, educators, scientists, artists, and changemakers who are not afraid to cross boundaries and challenge the status quo. Our events combine inspiring keynote talks with interactive workshops.</p>
                     </div>
                     <div class="about-card glass">
-                        <h3>Full Circle of Inspiration</h3>
-                        <p>At SKY Conference, we believe in a full circle of inspiration, where it does not come only from speakers on stage, but from everyone involved. Participants, volunteers, speakers, and organisers all play an equally important role.</p>
+                        <h3 data-i18n="about.card3.title">Full Circle of Inspiration</h3>
+                        <p data-i18n="about.card3.text">At SKY Conference, we believe in a full circle of inspiration, where it does not come only from speakers on stage, but from everyone involved. Participants, volunteers, speakers, and organisers all play an equally important role.</p>
                     </div>
                 </div>
                 <div class="about-visual">
@@ -137,28 +142,28 @@
             
             <div class="aim-section">
                 <div class="aim-header">
-                    <h3>Our <span class="accent">Aim</span></h3>
+                    <h3 data-i18n="about.aim.title">Our <span class="accent">Aim</span></h3>
                 </div>
                 <div class="aim-cards">
                     <div class="aim-card">
                         <div class="aim-number">01</div>
-                        <h4>Empower</h4>
-                        <p>Empower young people to believe in their own power — to show our generation that despite our young age we have influence on the surrounding world.</p>
+                        <h4 data-i18n="about.aim1.title">Empower</h4>
+                        <p data-i18n="about.aim1.text">Empower young people to believe in their own power — to show our generation that despite our young age we have influence on the surrounding world.</p>
                     </div>
                     <div class="aim-card">
                         <div class="aim-number">02</div>
-                        <h4>Inspire</h4>
-                        <p>Highlight the importance of continuously seeking new knowledge, possibilities, personal development and openness to changes.</p>
+                        <h4 data-i18n="about.aim2.title">Inspire</h4>
+                        <p data-i18n="about.aim2.text">Highlight the importance of continuously seeking new knowledge, possibilities, personal development and openness to changes.</p>
                     </div>
                     <div class="aim-card">
                         <div class="aim-number">03</div>
-                        <h4>Transform</h4>
-                        <p>Encourage participants to step beyond their comfort zones, take on new challenges, and turn ideas into action.</p>
+                        <h4 data-i18n="about.aim3.title">Transform</h4>
+                        <p data-i18n="about.aim3.text">Encourage participants to step beyond their comfort zones, take on new challenges, and turn ideas into action.</p>
                     </div>
                     <div class="aim-card">
                         <div class="aim-number">04</div>
-                        <h4>Build</h4>
-                        <p>Build confidence, responsibility, and a sense of purpose — so the next generation feels ready not just to dream, but to act.</p>
+                        <h4 data-i18n="about.aim4.title">Build</h4>
+                        <p data-i18n="about.aim4.text">Build confidence, responsibility, and a sense of purpose — so the next generation feels ready not just to dream, but to act.</p>
                     </div>
                 </div>
             </div>
@@ -169,8 +174,8 @@
     <section class="editions" id="editions">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Our Journey</span>
-                <h2 class="section-title">Previous <span class="accent">Editions</span></h2>
+                <span class="section-tag" data-i18n="editions.tag">Our Journey</span>
+                <h2 class="section-title" data-i18n="editions.title">Previous <span class="accent">Editions</span></h2>
             </div>
             
             <!-- Edition Tabs -->
@@ -183,14 +188,14 @@
             <div class="edition-content active" id="edition-2022">
                 <div class="edition-hero">
                     <div class="edition-info glass">
-                        <div class="edition-badge">First Edition</div>
+                        <div class="edition-badge" data-i18n="editions.2022.badge">First Edition</div>
                         <h3>SKY 2022</h3>
                         <div class="edition-meta">
-                            <span>Date: 14th May 2022</span>
-                            <span>Location: European Solidarity Centre, Gdańsk</span>
-                            <span>Theme: Beyond</span>
+                            <span data-i18n="editions.2022.date">Date: 14th May 2022</span>
+                            <span data-i18n="editions.2022.location">Location: European Solidarity Centre, Gdańsk</span>
+                            <span data-i18n="editions.2022.theme">Theme: Beyond</span>
                         </div>
-                        <p>On 14th May, we organised the first edition of SKY Conference in the well-known European Solidarity Centre in Gdańsk. All of our speakers showed us how they understand 'beyond' through their prism. It was a day full of emotions — we all learnt, laughed and enjoyed this day!</p>
+                        <p data-i18n="editions.2022.description">On 14th May, we organised the first edition of SKY Conference in the well-known European Solidarity Centre in Gdańsk. All of our speakers showed us how they understand 'beyond' through their prism. It was a day full of emotions — we all learnt, laughed and enjoyed this day!</p>
                     </div>
                     <div class="edition-image">
                         <img src="public/images/events/2022/event-1.jpg" alt="SKY 2022 Conference">
@@ -200,70 +205,70 @@
                 <div class="edition-context-bar">
                     <span class="edition-context-badge">SKY 2022 • Beyond • Gdańsk</span>
                 </div>
-                <h4 class="speakers-title">Our Speakers</h4>
+                <h4 class="speakers-title" data-i18n="editions.speakersTitle">Our Speakers</h4>
                 <div class="speakers-grid">
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-giuseppe')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo">
                         </div>
                         <h5>Giuseppe Cataldo</h5>
                         <span class="speaker-org">NASA</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-ed')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/ed-wollack.jpg" alt="Ed Wollack">
                         </div>
                         <h5>Ed Wollack</h5>
                         <span class="speaker-org">NASA</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-krzysztof')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski">
                         </div>
                         <h5>Krzysztof Zajączkowski</h5>
                         <span class="speaker-org">Drumduan School</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-bogna')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/bogna-pazderska.jpg" alt="Bogna Pazderska">
                         </div>
                         <h5>Bogna Pazderska</h5>
                         <span class="speaker-org">ESA Ambassador</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-magdalena')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/magdalena-filcek.jpg" alt="Magdalena Filcek">
                         </div>
                         <h5>Magdalena Filcek</h5>
                         <span class="speaker-org">Vinci Power-Nap</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-jacek')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/jacek-koltan.jpg" alt="Jacek Kołtan">
                         </div>
                         <h5>Jacek Kołtan</h5>
                         <span class="speaker-org">ECS</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-tymoteusz')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/tymoteusz-niewiarowski.png" alt="Tymoteusz Niewiarowski">
                         </div>
                         <h5>Tymoteusz Niewiarowski</h5>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-sara')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/sara-jablonska.jpg" alt="Sara Jabłońska">
                         </div>
                         <h5>Sara Jabłońska</h5>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-urszula')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/urszula-wyrwinska.jpg" alt="Urszula Wyrwińska">
                         </div>
                         <h5>Urszula Wyrwińska</h5>
                         <span class="speaker-org">Park On</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2022Modal', 'speaker-2022-jan-filip')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2022/jan-filip.jpg" alt="Jan Hofman & Filip Tłustochowicz">
                         </div>
@@ -273,11 +278,11 @@
                 </div>
                 
                 <div class="edition-cta">
-                    <button class="btn btn-secondary" onclick="openModal('sky2022Modal')">View All Speakers & Bios</button>
+                    <button class="btn btn-secondary" onclick="openModal('sky2022Modal')" data-i18n="editions.viewSpeakers">View All Speakers & Bios</button>
                 </div>
                 
                 <div class="edition-partners">
-                    <h4>Partners & Sponsors</h4>
+                    <h4 data-i18n="editions.partnersTitle">Partners & Sponsors</h4>
                     <div class="partners-grid">
                         <div class="partner-logo glass">Ziaja</div>
                         <div class="partner-logo glass">Polska Akademia Dzieci</div>
@@ -292,14 +297,14 @@
             <div class="edition-content" id="edition-2023">
                 <div class="edition-hero">
                     <div class="edition-info glass">
-                        <div class="edition-badge">Second Edition</div>
+                        <div class="edition-badge" data-i18n="editions.2023.badge">Second Edition</div>
                         <h3>SKY 2023</h3>
                         <div class="edition-meta">
-                            <span>Date: 9-10th March 2023</span>
-                            <span>Location: Kino Nowe Horyzonty, Wrocław</span>
-                            <span>Theme: Gratitude</span>
+                            <span data-i18n="editions.2023.date">Date: 9-10th March 2023</span>
+                            <span data-i18n="editions.2023.location">Location: Kino Nowe Horyzonty, Wrocław</span>
+                            <span data-i18n="editions.2023.theme">Theme: Gratitude</span>
                         </div>
-                        <p>SKY Conference united people again in an iconic cinema in Wrocław. We all took a look at gratitude — which was the topic of the conference. One more time, we had a chance to seek new knowledge, possibilities of growth and inspire one another.</p>
+                        <p data-i18n="editions.2023.description">SKY Conference united people again in an iconic cinema in Wrocław. We all took a look at gratitude — which was the topic of the conference. One more time, we had a chance to seek new knowledge, possibilities of growth and inspire one another.</p>
                     </div>
                     <div class="edition-image">
                         <img src="public/images/events/2023/event-1.jpg" alt="SKY 2023 Conference">
@@ -309,76 +314,76 @@
                 <div class="edition-context-bar">
                     <span class="edition-context-badge">SKY 2023 • Gratitude • Wrocław</span>
                 </div>
-                <h4 class="speakers-title">Our Speakers</h4>
+                <h4 class="speakers-title" data-i18n="editions.speakersTitle">Our Speakers</h4>
                 <div class="speakers-grid">
-                    <div class="speaker-card featured">
+                    <div class="speaker-card featured" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-philip')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/philip-zimbardo.jpg" alt="Prof. Philip Zimbardo">
                         </div>
                         <h5>Prof. Philip Zimbardo</h5>
                         <span class="speaker-org">Stanford University</span>
                     </div>
-                    <div class="speaker-card featured">
+                    <div class="speaker-card featured" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-tilda')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/tilda-swinton.jpg" alt="Tilda Swinton">
                         </div>
                         <h5>Tilda Swinton</h5>
                         <span class="speaker-org">Oscar-winning Actress</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-giuseppe')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo">
                         </div>
                         <h5>Giuseppe Cataldo</h5>
                         <span class="speaker-org">NASA</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-malgorzata')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/malgorzata-szumowska.jpg" alt="Małgorzata Szumowska">
                         </div>
                         <h5>Małgorzata Szumowska</h5>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-krzysztof')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski">
                         </div>
                         <h5>Krzysztof Zajączkowski</h5>
                         <span class="speaker-org">Drumduan School</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-julian')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/julian-wasek.jpg" alt="Julian Wąsek">
                         </div>
                         <h5>Julian Wąsek</h5>
                         <span class="speaker-org">School 2.0</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-atharva')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/atharva-dongre.jpg" alt="Atharva Dongre">
                         </div>
                         <h5>Atharva Dongre</h5>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-ewelina')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/ewelina-cichon.jpg" alt="Dr Ewelina Cichoń">
                         </div>
                         <h5>Dr Ewelina Cichoń</h5>
                         <span class="speaker-org">DSW</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-maksymilian')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/maksymilian-paczynski.jpg" alt="Maksymilian Paczyński">
                         </div>
                         <h5>Maksymilian Paczyński</h5>
                         <span class="speaker-org">AI Innovator</span>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-jan')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/jan-hofman.jpg" alt="Jan Hofman">
                         </div>
                         <h5>Jan Hofman</h5>
                     </div>
-                    <div class="speaker-card">
+                    <div class="speaker-card" onclick="openSpeakerBio('sky2023Modal', 'speaker-2023-mikolaj')" style="cursor: pointer;">
                         <div class="speaker-image">
                             <img src="public/images/speakers/2023/mikolaj-wojciech.jpg" alt="Mikołaj Hop & Wojciech Czyż">
                         </div>
@@ -388,11 +393,11 @@
                 </div>
                 
                 <div class="edition-cta">
-                    <button class="btn btn-secondary" onclick="openModal('sky2023Modal')">View All Speakers & Bios</button>
+                    <button class="btn btn-secondary" onclick="openModal('sky2023Modal')" data-i18n="editions.viewSpeakers">View All Speakers & Bios</button>
                 </div>
                 
                 <div class="edition-partners">
-                    <h4>Partners & Sponsors</h4>
+                    <h4 data-i18n="editions.partnersTitle">Partners & Sponsors</h4>
                     <div class="partners-grid">
                         <div class="partner-logo glass">INVSBL</div>
                         <div class="partner-logo glass">Ziaja</div>
@@ -402,7 +407,7 @@
                 </div>
                 
                 <div class="edition-gallery">
-                    <h4>Gallery</h4>
+                    <h4 data-i18n="editions.galleryTitle">Gallery</h4>
                     <div class="gallery-grid">
                         <div class="gallery-item featured-gallery">
                             <img src="public/images/gallery/invsbl-family.jpg" alt="INVSBL Family at SKY 2023">
@@ -422,9 +427,9 @@
         </div>
         <div class="container">
             <div class="section-header light">
-                <span class="section-tag">Join SKY '26</span>
-                <h2 class="section-title">Be Part of <span class="accent">Something Big</span></h2>
-                <p class="section-subtitle">Choose how you want to contribute to the next SKY Conference</p>
+                <span class="section-tag" data-i18n="register.tag">Join SKY '26</span>
+                <h2 class="section-title" data-i18n="register.title">Be Part of <span class="accent">Something Big</span></h2>
+                <p class="section-subtitle" data-i18n="register.subtitle">Choose how you want to contribute to the next SKY Conference</p>
             </div>
             
             <div class="register-cards">
@@ -432,42 +437,42 @@
                     <div class="register-image">
                         <img src="public/images/registration/speaker.jpg" alt="Speaker at SKY Conference">
                     </div>
-                    <h3>Be a Speaker</h3>
-                    <p>Share your knowledge, experience, and story with hundreds of young minds eager to learn and be inspired.</p>
+                    <h3 data-i18n="register.speaker.title">Be a Speaker</h3>
+                    <p data-i18n="register.speaker.desc">Share your knowledge, experience, and story with hundreds of young minds eager to learn and be inspired.</p>
                     <ul class="register-perks">
-                        <li>Share your expertise</li>
-                        <li>Inspire the next generation</li>
-                        <li>Connect with other changemakers</li>
+                        <li data-i18n="register.speaker.perk1">Share your expertise</li>
+                        <li data-i18n="register.speaker.perk2">Inspire the next generation</li>
+                        <li data-i18n="register.speaker.perk3">Connect with other changemakers</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Apply as Speaker</a>
+                    <a href="#" class="btn btn-primary" data-i18n="register.speaker.btn">Apply as Speaker</a>
                 </div>
                 
                 <div class="register-card glass">
                     <div class="register-image">
                         <img src="public/images/registration/participant.jpg" alt="Participants at SKY Conference">
                     </div>
-                    <h3>Be a Participant</h3>
-                    <p>Join us for an unforgettable experience filled with inspiration, learning, and meaningful connections.</p>
+                    <h3 data-i18n="register.participant.title">Be a Participant</h3>
+                    <p data-i18n="register.participant.desc">Join us for an unforgettable experience filled with inspiration, learning, and meaningful connections.</p>
                     <ul class="register-perks">
-                        <li>Access to all sessions</li>
-                        <li>Interactive workshops</li>
-                        <li>Networking opportunities</li>
+                        <li data-i18n="register.participant.perk1">Access to all sessions</li>
+                        <li data-i18n="register.participant.perk2">Interactive workshops</li>
+                        <li data-i18n="register.participant.perk3">Networking opportunities</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Register Now</a>
+                    <a href="#" class="btn btn-primary" data-i18n="register.participant.btn">Register Now</a>
                 </div>
                 
                 <div class="register-card glass">
                     <div class="register-image">
                         <img src="public/images/registration/volunteer.jpg" alt="Volunteers at SKY Conference">
                     </div>
-                    <h3>Be a Volunteer</h3>
-                    <p>Become part of the team behind the magic. Help us create an incredible experience for everyone.</p>
+                    <h3 data-i18n="register.volunteer.title">Be a Volunteer</h3>
+                    <p data-i18n="register.volunteer.desc">Become part of the team behind the magic. Help us create an incredible experience for everyone.</p>
                     <ul class="register-perks">
-                        <li>Behind-the-scenes experience</li>
-                        <li>Team collaboration</li>
-                        <li>Personal growth opportunities</li>
+                        <li data-i18n="register.volunteer.perk1">Behind-the-scenes experience</li>
+                        <li data-i18n="register.volunteer.perk2">Team collaboration</li>
+                        <li data-i18n="register.volunteer.perk3">Personal growth opportunities</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Join the Team</a>
+                    <a href="#" class="btn btn-primary" data-i18n="register.volunteer.btn">Join the Team</a>
                 </div>
             </div>
         </div>
@@ -477,9 +482,9 @@
     <section class="media" id="media">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Press Coverage</span>
-                <h2 class="section-title">SKY in the <span class="accent">Media</span></h2>
-                <p class="section-subtitle">See how SKY Conference has been featured in news and media</p>
+                <span class="section-tag" data-i18n="media.tag">Press Coverage</span>
+                <h2 class="section-title" data-i18n="media.title">SKY in the <span class="accent">Media</span></h2>
+                <p class="section-subtitle" data-i18n="media.subtitle">See how SKY Conference has been featured in news and media</p>
             </div>
             
             <div class="media-grid">
@@ -496,8 +501,8 @@
                     </div>
                     <div class="media-info">
                         <span class="media-source">YouTube</span>
-                        <h3>SKY Conference Highlight</h3>
-                        <p>Watch the highlights and hear from participants about their SKY experience.</p>
+                        <h3 data-i18n="media.youtube.title">SKY Conference Highlight</h3>
+                        <p data-i18n="media.youtube.desc">Watch the highlights and hear from participants about their SKY experience.</p>
                     </div>
                 </div>
                 
@@ -512,8 +517,8 @@
                         </div>
                         <div class="media-info">
                             <span class="media-source">TVP Gdańsk</span>
-                            <h3>SKY Conference 2022 TV Feature</h3>
-                            <p>SKY Conference featured on regional Polish television, showcasing the impact of youth-led initiatives.</p>
+                            <h3 data-i18n="media.tvp.title">SKY Conference 2022 TV Feature</h3>
+                            <p data-i18n="media.tvp.desc">SKY Conference featured on regional Polish television, showcasing the impact of youth-led initiatives.</p>
                         </div>
                     </a>
                 </div>
@@ -525,9 +530,9 @@
     <section class="initiators" id="initiators">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">The Founders</span>
-                <h2 class="section-title">Meet the <span class="accent">Initiators</span></h2>
-                <p class="section-subtitle">The visionaries who turned a bold idea into reality</p>
+                <span class="section-tag" data-i18n="initiators.tag">The Founders</span>
+                <h2 class="section-title" data-i18n="initiators.title">Meet the <span class="accent">Initiators</span></h2>
+                <p class="section-subtitle" data-i18n="initiators.subtitle">The visionaries who turned a bold idea into reality</p>
             </div>
             
             <div class="initiators-grid">
@@ -537,9 +542,9 @@
                         <div class="initiator-glow"></div>
                     </div>
                     <h3>Katarzyna Chudziak</h3>
-                    <span class="initiator-role">Co-Founder & Initiator</span>
-                    <p>TEDx speaker, world championship dancer, and 2023 Wrocław Citizen of the Year. Founder of Never Too Soon foundation.</p>
-                    <span class="read-more-hint">Click to read full bio →</span>
+                    <span class="initiator-role" data-i18n="initiators.role">Co-Founder & Initiator</span>
+                    <p data-i18n="initiators.katarzyna.summary">TEDx speaker, world championship dancer, and 2023 Wrocław Citizen of the Year. Founder of Never Too Soon foundation.</p>
+                    <span class="read-more-hint" data-i18n="initiators.readMore">Click to read full bio →</span>
                 </div>
                 
                 <div class="initiator-card glass clickable" onclick="openModal('zuzannaModal')">
@@ -548,14 +553,14 @@
                         <div class="initiator-glow"></div>
                     </div>
                     <h3>Zuzanna Hofman</h3>
-                    <span class="initiator-role">Co-Founder & Initiator</span>
-                    <p>FLEX scholarship recipient, psychology enthusiast, and UNICEF V4 Well-being project co-author.</p>
-                    <span class="read-more-hint">Click to read full bio →</span>
+                    <span class="initiator-role" data-i18n="initiators.role">Co-Founder & Initiator</span>
+                    <p data-i18n="initiators.zuzanna.summary">FLEX scholarship recipient, psychology enthusiast, and UNICEF V4 Well-being project co-author.</p>
+                    <span class="read-more-hint" data-i18n="initiators.readMore">Click to read full bio →</span>
                 </div>
             </div>
             
             <div class="initiator-note glass">
-                <p><strong>Julia Mia Smuczynska</strong> was also an initiator and co-organised the first edition of SKY Conference in 2022.</p>
+                <p data-i18n="initiators.juliaNote"><strong>Julia Mia Smuczynska</strong> was also an initiator and co-organised the first edition of SKY Conference in 2022.</p>
             </div>
         </div>
     </section>
@@ -566,16 +571,16 @@
             <div class="contact-wrapper glass">
                 <div class="contact-info">
                     <div class="section-header">
-                        <span class="section-tag">Get in Touch</span>
-                        <h2 class="section-title">Contact <span class="accent">Us</span></h2>
+                        <span class="section-tag" data-i18n="contact.tag">Get in Touch</span>
+                        <h2 class="section-title" data-i18n="contact.title">Contact <span class="accent">Us</span></h2>
                     </div>
-                    <p>Have questions? Want to partner with us? We'd love to hear from you!</p>
+                    <p data-i18n="contact.desc">Have questions? Want to partner with us? We'd love to hear from you!</p>
                     
                     <div class="contact-methods">
                         <div class="contact-method">
                             <div class="method-icon"></div>
                             <div class="method-details">
-                                <h4>Email</h4>
+                                <h4 data-i18n="contact.emailLabel">Email</h4>
                                 <a href="mailto:skyyouthconference@gmail.com">skyyouthconference@gmail.com</a>
                             </div>
                         </div>
@@ -583,7 +588,7 @@
                         <div class="contact-method">
                             <div class="method-icon"></div>
                             <div class="method-details">
-                                <h4>Phone</h4>
+                                <h4 data-i18n="contact.phoneLabel">Phone</h4>
                                 <p>Katarzyna Chudziak: <a href="tel:+48663176020">+48 663 176 020</a></p>
                                 <p>Zuzanna Hofman: <a href="tel:+48537732237">+48 537 732 237</a></p>
                             </div>
@@ -609,20 +614,20 @@
                     <a href="#home" class="logo">
                         <img src="public/images/logo.png" alt="SKY Conference" class="logo-img">
                     </a>
-                    <p>Sky is not the limit</p>
+                    <p data-i18n="hero.subtitle">Sky is not the limit</p>
                 </div>
                 <div class="footer-links">
-                    <a href="#about">About</a>
-                    <a href="#editions">Editions</a>
-                    <a href="#register">Register</a>
-                    <a href="#contact">Contact</a>
+                    <a href="#about" data-i18n="footer.about">About</a>
+                    <a href="#editions" data-i18n="footer.editions">Editions</a>
+                    <a href="#register" data-i18n="footer.register">Register</a>
+                    <a href="#contact" data-i18n="footer.contact">Contact</a>
                 </div>
                 <div class="footer-social">
                     <a href="mailto:skyyouthconference@gmail.com" aria-label="Email">Email</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 SKY Conference. All rights reserved.</p>
+                <p data-i18n="footer.copyright">&copy; 2026 SKY Conference. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -631,8 +636,8 @@
     <div class="modal-overlay" id="speakersModal">
         <div class="modal-content">
             <button class="modal-close" aria-label="Close modal">×</button>
-            <h3 class="modal-title">All SKY Speakers</h3>
-            <p class="modal-description">Over the past editions, SKY Conference has hosted incredible speakers who shared their knowledge, passion, and stories. From scientists and artists to entrepreneurs and changemakers – our speakers embody the spirit of going beyond limits.</p>
+            <h3 class="modal-title" data-i18n="modals.speakers.title">All SKY Speakers</h3>
+            <p class="modal-description" data-i18n="modals.speakers.desc">Over the past editions, SKY Conference has hosted incredible speakers who shared their knowledge, passion, and stories. From scientists and artists to entrepreneurs and changemakers – our speakers embody the spirit of going beyond limits.</p>
             
             <h4 style="margin-bottom: 16px; color: var(--accent-primary);">SKY 2023 • Wrocław</h4>
             <div class="modal-speakers-grid">
@@ -664,7 +669,7 @@
             </div>
             
             <div class="modal-cta">
-                <a href="#register" class="btn btn-primary" onclick="closeModal('speakersModal')">Become a Speaker</a>
+                <a href="#register" class="btn btn-primary" onclick="closeModal('speakersModal')" data-i18n="modals.speakers.cta">Become a Speaker</a>
             </div>
         </div>
     </div>
@@ -673,29 +678,29 @@
     <div class="modal-overlay" id="workshopsModal">
         <div class="modal-content">
             <button class="modal-close" aria-label="Close modal">×</button>
-            <h3 class="modal-title">Interactive Workshops</h3>
-            <p class="modal-description">SKY Conference isn't just about listening – it's about doing. Our interactive workshops give participants hands-on experience, practical skills, and the chance to collaborate with peers from around the world.</p>
+            <h3 class="modal-title" data-i18n="modals.workshops.title">Interactive Workshops</h3>
+            <p class="modal-description" data-i18n="modals.workshops.desc">SKY Conference isn't just about listening – it's about doing. Our interactive workshops give participants hands-on experience, practical skills, and the chance to collaborate with peers from around the world.</p>
             
             <div class="aim-cards" style="margin-bottom: 32px;">
                 <div class="aim-card">
                     <div class="aim-number">→</div>
-                    <h4>Hands-On Learning</h4>
-                    <p>Move beyond theory into practice with workshops designed to teach real skills you can apply immediately.</p>
+                    <h4 data-i18n="modals.workshops.card1.title">Hands-On Learning</h4>
+                    <p data-i18n="modals.workshops.card1.text">Move beyond theory into practice with workshops designed to teach real skills you can apply immediately.</p>
                 </div>
                 <div class="aim-card">
                     <div class="aim-number">→</div>
-                    <h4>Small Group Sessions</h4>
-                    <p>Intimate settings that allow for meaningful interaction, questions, and personalized guidance from experts.</p>
+                    <h4 data-i18n="modals.workshops.card2.title">Small Group Sessions</h4>
+                    <p data-i18n="modals.workshops.card2.text">Intimate settings that allow for meaningful interaction, questions, and personalized guidance from experts.</p>
                 </div>
                 <div class="aim-card">
                     <div class="aim-number">→</div>
-                    <h4>Diverse Topics</h4>
-                    <p>From creative arts to technology, from leadership to mindfulness – there's something for everyone.</p>
+                    <h4 data-i18n="modals.workshops.card3.title">Diverse Topics</h4>
+                    <p data-i18n="modals.workshops.card3.text">From creative arts to technology, from leadership to mindfulness – there's something for everyone.</p>
                 </div>
             </div>
             
             <div class="modal-cta">
-                <a href="#register" class="btn btn-primary" onclick="closeModal('workshopsModal')">Join a Workshop</a>
+                <a href="#register" class="btn btn-primary" onclick="closeModal('workshopsModal')" data-i18n="modals.workshops.cta">Join a Workshop</a>
             </div>
         </div>
     </div>
@@ -708,7 +713,7 @@
                 <img src="public/images/initiators/katarzyna.jpg" alt="Katarzyna Chudziak" class="modal-initiator-img">
                 <div>
                     <h3 class="modal-title">Katarzyna Chudziak</h3>
-                    <span class="initiator-role">Co-Founder & Initiator</span>
+                    <span class="initiator-role" data-i18n="initiators.role">Co-Founder & Initiator</span>
                 </div>
             </div>
             <div class="modal-bio">
@@ -721,7 +726,7 @@
                 <p>She is a student of Global Arts, Culture & Politics at the prestigious University of Amsterdam.</p>
             </div>
             <div class="modal-cta">
-                <a href="mailto:skyyouthconference@gmail.com" class="btn btn-primary" onclick="closeModal('katarzynaModal')">Get in Touch</a>
+                <a href="mailto:skyyouthconference@gmail.com" class="btn btn-primary" onclick="closeModal('katarzynaModal')" data-i18n="modals.getInTouch">Get in Touch</a>
             </div>
         </div>
     </div>
@@ -734,7 +739,7 @@
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop" alt="Zuzanna Hofman" class="modal-initiator-img">
                 <div>
                     <h3 class="modal-title">Zuzanna Hofman</h3>
-                    <span class="initiator-role">Co-Founder & Initiator</span>
+                    <span class="initiator-role" data-i18n="initiators.role">Co-Founder & Initiator</span>
                 </div>
             </div>
             <div class="modal-bio">
@@ -745,7 +750,7 @@
                 <p>Since 2011, she has been involved in the Polish Children's Academy (Polska Akademia Dzieci) project, giving lectures and volunteering.</p>
             </div>
             <div class="modal-cta">
-                <a href="mailto:skyyouthconference@gmail.com" class="btn btn-primary" onclick="closeModal('zuzannaModal')">Get in Touch</a>
+                <a href="mailto:skyyouthconference@gmail.com" class="btn btn-primary" onclick="closeModal('zuzannaModal')" data-i18n="modals.getInTouch">Get in Touch</a>
             </div>
         </div>
     </div>
@@ -757,16 +762,16 @@
             <div class="conference-modal-header">
                 <h3 class="modal-title">SKY 2022 • Beyond</h3>
                 <div class="conference-meta">
-                    <span>14th May 2022</span>
-                    <span>European Solidarity Centre, Gdańsk</span>
+                    <span data-i18n="editions.2022.date">14th May 2022</span>
+                    <span data-i18n="editions.2022.location">European Solidarity Centre, Gdańsk</span>
                 </div>
             </div>
             
-            <p class="modal-description">The first edition of SKY Conference explored what it means to go "Beyond" — beyond limits, beyond expectations, beyond the ordinary. Our speakers shared their journeys of pushing boundaries in science, education, medicine, and personal growth.</p>
+            <p class="modal-description" data-i18n="modals.sky2022.desc">The first edition of SKY Conference explored what it means to go "Beyond" — beyond limits, beyond expectations, beyond the ordinary. Our speakers shared their journeys of pushing boundaries in science, education, medicine, and personal growth.</p>
             
-            <h4 class="modal-section-title">Speakers</h4>
+            <h4 class="modal-section-title" data-i18n="modals.speakersSection">Speakers</h4>
             <div class="conference-speakers-grid">
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-giuseppe" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo">
                     <h5>Giuseppe Cataldo</h5>
                     <span class="speaker-org">NASA</span>
@@ -778,7 +783,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-ed" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/ed-wollack.jpg" alt="Ed Wollack">
                     <h5>Ed Wollack</h5>
                     <span class="speaker-org">NASA</span>
@@ -790,7 +795,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-krzysztof" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski">
                     <h5>Krzysztof Zajączkowski</h5>
                     <span class="speaker-org">Drumduan School</span>
@@ -802,7 +807,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-bogna" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/bogna-pazderska.jpg" alt="Bogna Pazderska">
                     <h5>Bogna Pazderska</h5>
                     <span class="speaker-org">ESA Ambassador</span>
@@ -814,7 +819,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-magdalena" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/magdalena-filcek.jpg" alt="Magdalena Filcek">
                     <h5>Magdalena Filcek</h5>
                     <span class="speaker-org">Vinci Power-Nap</span>
@@ -826,7 +831,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-jacek" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/jacek-koltan.jpg" alt="Jacek Kołtan">
                     <h5>Jacek Kołtan</h5>
                     <span class="speaker-org">European Solidarity Centre</span>
@@ -838,7 +843,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-tymoteusz" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/tymoteusz-niewiarowski.png" alt="Tymoteusz Niewiarowski">
                     <h5>Tymoteusz Niewiarowski</h5>
                     <p class="bio-summary">14-year-old TEDx speaker from Leipzig, interested in geopolitics and nuclear energy.</p>
@@ -848,7 +853,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-sara" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/sara-jablonska.jpg" alt="Sara Jabłońska">
                     <h5>Sara Jabłońska</h5>
                     <p class="bio-summary">15-year-old public speaking champion, volunteer at European Solidarity Centre.</p>
@@ -858,7 +863,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-urszula" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/urszula-wyrwinska.jpg" alt="Urszula Wyrwińska">
                     <h5>Urszula Wyrwińska</h5>
                     <span class="speaker-org">Park On Association</span>
@@ -870,7 +875,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2022-jan-filip" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2022/jan-filip.jpg" alt="Jan Hofman & Filip Tłustochowicz">
                     <h5>Jan & Filip</h5>
                     <span class="speaker-org">SCPL</span>
@@ -892,16 +897,16 @@
             <div class="conference-modal-header">
                 <h3 class="modal-title">SKY 2023 • Gratitude</h3>
                 <div class="conference-meta">
-                    <span>9-10th March 2023</span>
-                    <span>Kino Nowe Horyzonty, Wrocław</span>
+                    <span data-i18n="editions.2023.date">9-10th March 2023</span>
+                    <span data-i18n="editions.2023.location">Kino Nowe Horyzonty, Wrocław</span>
                 </div>
             </div>
             
-            <p class="modal-description">The second edition brought together world-renowned speakers to explore the theme of "Gratitude" — examining how appreciation and thankfulness can transform our lives, relationships, and communities.</p>
+            <p class="modal-description" data-i18n="modals.sky2023.desc">The second edition brought together world-renowned speakers to explore the theme of "Gratitude" — examining how appreciation and thankfulness can transform our lives, relationships, and communities.</p>
             
-            <h4 class="modal-section-title">Speakers</h4>
+            <h4 class="modal-section-title" data-i18n="modals.speakersSection">Speakers</h4>
             <div class="conference-speakers-grid">
-                <div class="conference-speaker-card featured" onclick="toggleBio(this)">
+                <div class="conference-speaker-card featured" id="speaker-2023-philip" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/philip-zimbardo.jpg" alt="Prof. Philip Zimbardo">
                     <h5>Prof. Philip Zimbardo</h5>
                     <span class="speaker-org">Stanford University</span>
@@ -913,7 +918,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card featured" onclick="toggleBio(this)">
+                <div class="conference-speaker-card featured" id="speaker-2023-tilda" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/tilda-swinton.jpg" alt="Tilda Swinton">
                     <h5>Tilda Swinton</h5>
                     <span class="speaker-org">Oscar-winning Actress</span>
@@ -925,7 +930,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-giuseppe" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/giuseppe-cataldo.jpg" alt="Giuseppe Cataldo">
                     <h5>Giuseppe Cataldo</h5>
                     <span class="speaker-org">NASA</span>
@@ -936,7 +941,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-malgorzata" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/malgorzata-szumowska.jpg" alt="Małgorzata Szumowska">
                     <h5>Małgorzata Szumowska</h5>
                     <p class="bio-summary">Mother, wife, activist, educator, and vision enthusiast with a passion for words.</p>
@@ -947,7 +952,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-krzysztof" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/krzysztof-zajaczkowski.jpg" alt="Krzysztof Zajączkowski">
                     <h5>Krzysztof Zajączkowski</h5>
                     <span class="speaker-org">Drumduan School</span>
@@ -958,7 +963,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-julian" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/julian-wasek.jpg" alt="Julian Wąsek">
                     <h5>Julian Wąsek</h5>
                     <span class="speaker-org">School 2.0 Foundation</span>
@@ -970,7 +975,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-atharva" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/atharva-dongre.jpg" alt="Atharva Dongre">
                     <h5>Atharva Dongre</h5>
                     <p class="bio-summary">16-year-old from India, sharing his cross-cultural journey from Mumbai to Wrocław.</p>
@@ -981,7 +986,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-ewelina" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/ewelina-cichon.jpg" alt="Dr Ewelina Cichoń">
                     <h5>Dr Ewelina Cichoń</h5>
                     <span class="speaker-org">DSW / Ministry of Health</span>
@@ -993,7 +998,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-maksymilian" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/maksymilian-paczynski.jpg" alt="Maksymilian Paczyński">
                     <h5>Maksymilian Paczyński</h5>
                     <span class="speaker-org">AI Innovator</span>
@@ -1005,7 +1010,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-jan" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/jan-hofman.jpg" alt="Jan Hofman">
                     <h5>Jan Hofman</h5>
                     <p class="bio-summary">Returning speaker, continuing to share entrepreneurial insights and experiences.</p>
@@ -1015,7 +1020,7 @@
                     <span class="read-more-toggle">Read more ↓</span>
                 </div>
                 
-                <div class="conference-speaker-card" onclick="toggleBio(this)">
+                <div class="conference-speaker-card" id="speaker-2023-mikolaj" onclick="toggleBio(this)">
                     <img src="public/images/speakers/2023/mikolaj-wojciech.jpg" alt="Mikołaj Hop & Wojciech Czyż">
                     <h5>Mikołaj & Wojciech</h5>
                     <span class="speaker-org">AngielskiToMy</span>
@@ -1030,6 +1035,7 @@
         </div>
     </div>
 
+    <script src="translations.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

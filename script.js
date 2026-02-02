@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initScrollAnimations();
     initModals();
+    
+    // Initialize language toggle (from translations.js)
+    if (typeof initLanguageToggle === 'function') {
+        initLanguageToggle();
+    }
 });
 
 // ===== Navbar Scroll Effect =====
@@ -421,6 +426,13 @@ function closeModal(modalId) {
     if (modal) {
         modal.classList.remove('active');
         document.body.style.overflow = '';
+        
+        // Collapse all expanded bios when closing
+        modal.querySelectorAll('.conference-speaker-card.expanded').forEach(card => {
+            card.classList.remove('expanded');
+            const toggle = card.querySelector('.read-more-toggle');
+            if (toggle) toggle.textContent = 'Read more ↓';
+        });
     }
 }
 
@@ -433,7 +445,38 @@ function toggleBio(card) {
     }
 }
 
+// Open modal with a specific speaker's bio already expanded
+function openSpeakerBio(modalId, speakerId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        // First collapse any previously expanded cards
+        modal.querySelectorAll('.conference-speaker-card.expanded').forEach(card => {
+            card.classList.remove('expanded');
+            const toggle = card.querySelector('.read-more-toggle');
+            if (toggle) toggle.textContent = 'Read more ↓';
+        });
+        
+        // Open the modal
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Find and expand the specific speaker
+        const speakerCard = document.getElementById(speakerId);
+        if (speakerCard) {
+            speakerCard.classList.add('expanded');
+            const toggle = speakerCard.querySelector('.read-more-toggle');
+            if (toggle) toggle.textContent = 'Show less';
+            
+            // Scroll to the speaker card within the modal after a brief delay
+            setTimeout(() => {
+                speakerCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    }
+}
+
 // Make functions globally available for inline onclick handlers
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.toggleBio = toggleBio;
+window.openSpeakerBio = openSpeakerBio;
