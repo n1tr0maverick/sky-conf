@@ -20,14 +20,27 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== Navbar Scroll Effect =====
 function initNavbar() {
     const navbar = document.getElementById('navbar');
+    let isScrolled = false;
+    let ticking = false;
     
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.scrollY > 50;
+
+                if (scrolled !== isScrolled) {
+                    if (scrolled) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                    isScrolled = scrolled;
+                }
+                ticking = false;
+            });
+            ticking = true;
         }
-    });
+    }, { passive: true });
 }
 
 // ===== Mobile Menu Toggle =====
