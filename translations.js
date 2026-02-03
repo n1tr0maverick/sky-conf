@@ -9,6 +9,7 @@ const translations = {
         'nav.media': 'Media',
         'nav.initiators': 'Initiators',
         'nav.contact': 'Contact',
+        'nav.skip': 'Skip to main content',
 
         // Hero Section
         'hero.badge': 'Coming Soon',
@@ -201,6 +202,7 @@ const translations = {
         'nav.media': 'Media',
         'nav.initiators': 'Inicjatorzy',
         'nav.contact': 'Kontakt',
+        'nav.skip': 'Przejdź do treści',
 
         // Hero Section
         'hero.badge': 'Już Wkrótce',
