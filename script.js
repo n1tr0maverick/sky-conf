@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initKeyboardAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -504,3 +505,17 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.toggleBio = toggleBio;
 window.openSpeakerBio = openSpeakerBio;
+
+// ===== Keyboard Accessibility =====
+function initKeyboardAccessibility() {
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            const target = e.target;
+            // Check if the element is a "fake" button (div with role="button")
+            if (target.getAttribute('role') === 'button' && target.tagName !== 'BUTTON' && target.tagName !== 'A') {
+                e.preventDefault(); // Prevent scrolling for Space
+                target.click();
+            }
+        }
+    });
+}
