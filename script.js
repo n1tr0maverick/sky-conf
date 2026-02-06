@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,53 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility Enhancements =====
+function initAccessibility() {
+    // Select all interactive elements that are implemented as divs
+    const interactiveSelectors = [
+        '.speaker-card[onclick]',
+        '.initiator-card[onclick]',
+        '.conference-speaker-card[onclick]',
+        '.carousel-slide[data-action]'
+    ];
+
+    const elements = document.querySelectorAll(interactiveSelectors.join(', '));
+
+    elements.forEach(el => {
+        // Add ARIA role
+        if (!el.hasAttribute('role')) {
+            el.setAttribute('role', 'button');
+        }
+
+        // Add tabindex for keyboard focus
+        if (!el.hasAttribute('tabindex')) {
+            el.setAttribute('tabindex', '0');
+        }
+    });
+
+    // Global keyboard listener for these elements
+    document.addEventListener('keydown', (e) => {
+        // Check for Enter or Space key
+        if (e.key === 'Enter' || e.key === ' ') {
+            const target = e.target;
+
+            // Check if the target is one of our enhanced elements
+            // We verify it has role="button" and isn't a native interactive element
+            if (target.tagName !== 'BUTTON' && target.tagName !== 'A' &&
+                (target.getAttribute('role') === 'button')) {
+
+                // Prevent default scrolling for Space key
+                if (e.key === ' ') {
+                    e.preventDefault();
+                }
+
+                // Trigger the click event
+                target.click();
+            }
+        }
+    });
 }
 
 // Make functions globally available for inline onclick handlers
