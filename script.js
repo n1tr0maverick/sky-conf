@@ -348,6 +348,23 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache layout metrics
+    let sectionOffsets = [];
+
+    function updateLayoutMetrics() {
+        sectionOffsets = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+    }
+
+    // Update metrics on load and resize
+    window.addEventListener('load', updateLayoutMetrics);
+    window.addEventListener('resize', updateLayoutMetrics);
+
+    // Initial calculation
+    updateLayoutMetrics();
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -357,17 +374,21 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+
+                // Use cached metrics instead of DOM query inside loop
+                sectionOffsets.forEach(section => {
+                    if (scrolled >= section.top) {
+                        current = section.id;
                     }
                 });
 
                 navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
+                    // Guard DOM updates
+                    const shouldBeActive = link.getAttribute('href') === `#${current}`;
+                    if (shouldBeActive && !link.classList.contains('active')) {
                         link.classList.add('active');
+                    } else if (!shouldBeActive && link.classList.contains('active')) {
+                        link.classList.remove('active');
                     }
                 });
 
