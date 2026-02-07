@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -504,3 +505,24 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.toggleBio = toggleBio;
 window.openSpeakerBio = openSpeakerBio;
+
+// ===== Accessibility =====
+function initAccessibility() {
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            const el = document.activeElement;
+            // Check if the element is one of our custom buttons
+            // We check for role="button" or tabindex="0" but exclude native interactive elements
+            // that already handle these keys (like <button>, <a href="...">, <input>)
+            // to avoid double-firing or interfering with native behavior.
+
+            const isNativeInteractive = ['BUTTON', 'INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName) ||
+                                      (el.tagName === 'A' && el.hasAttribute('href'));
+
+            if (!isNativeInteractive && (el.getAttribute('role') === 'button' || el.getAttribute('tabindex') === '0')) {
+                e.preventDefault();
+                el.click();
+            }
+        }
+    });
+}
