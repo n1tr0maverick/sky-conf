@@ -348,7 +348,24 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache section positions to avoid layout thrashing
+    let sectionPositions = [];
+
+    function updateSectionPositions() {
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+    }
+
+    // Initial calculation and updates on resize/load
+    updateSectionPositions();
+    window.addEventListener('resize', updateSectionPositions, { passive: true });
+    // Recalculate after images load to ensure correct offsets
+    window.addEventListener('load', updateSectionPositions, { passive: true });
+
     let ticking = false;
+    let lastCurrent = '';
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -357,24 +374,29 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Use cached positions instead of querying DOM
+                for (const section of sectionPositions) {
+                    if (scrolled >= section.top) {
+                        current = section.id;
                     }
-                });
+                }
 
-                // Parallax Effect
+                // Only update DOM if the active section changed
+                if (current !== lastCurrent) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastCurrent = current;
+                }
+
+                // Parallax Effect - use translate3d for GPU acceleration
                 orbs.forEach((orb, index) => {
                     const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    orb.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
                 });
 
                 ticking = false;
