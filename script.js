@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,48 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility Improvements =====
+function initAccessibility() {
+    // 1. Make scroll indicator interactive
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
+        const scrollToAbout = () => {
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+                const offset = 80;
+                const targetPosition = aboutSection.getBoundingClientRect().top + window.pageYOffset - offset;
+                smoothScrollTo(targetPosition, 800);
+            }
+        };
+
+        scrollIndicator.addEventListener('click', scrollToAbout);
+    }
+
+    // 2. Add keyboard support for all custom interactive elements
+    // We use a delegated event listener to handle current and future elements
+    document.addEventListener('keydown', (e) => {
+        // Only handle Enter and Space keys
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+
+        const target = e.target;
+
+        // Check if the element is an interactive div (role="button" or tabindex="0")
+        // and is NOT a native interactive element
+        const isInteractiveDiv = (
+            (target.getAttribute('role') === 'button' || target.getAttribute('tabindex') === '0') &&
+            target.tagName !== 'BUTTON' &&
+            target.tagName !== 'A' &&
+            target.tagName !== 'INPUT' &&
+            target.tagName !== 'TEXTAREA'
+        );
+
+        if (isInteractiveDiv) {
+            e.preventDefault();
+            target.click();
+        }
+    });
 }
 
 // Make functions globally available for inline onclick handlers
