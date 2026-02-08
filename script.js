@@ -344,11 +344,22 @@ function initScrollAnimations() {
 
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
-    const sections = document.querySelectorAll('section[id]');
+    // Cache sections and create nav link map for O(1) access
+    const sections = Array.from(document.querySelectorAll('section[id]'));
     const navLinks = document.querySelectorAll('.nav-links a');
+    const navLinkMap = new Map();
+
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            navLinkMap.set(href.substring(1), link);
+        }
+    });
+
     const orbs = document.querySelectorAll('.gradient-orb');
     
     let ticking = false;
+    let lastActiveId = '';
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -356,20 +367,31 @@ function initOptimizedScrollHandlers() {
                 const scrolled = window.scrollY;
 
                 // Active Navigation Highlight
+                // Only update DOM when active section changes
                 let current = '';
+
+                // Find current section
+                // We don't cache offsetTop here because loading="lazy" images
+                // cause layout shifts that would invalidate cached values.
                 sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+                    if (scrolled >= section.offsetTop - 100) {
+                        current = section.id;
                     }
                 });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                if (current !== lastActiveId) {
+                    // Remove active class from previous
+                    if (lastActiveId && navLinkMap.has(lastActiveId)) {
+                        navLinkMap.get(lastActiveId).classList.remove('active');
                     }
-                });
+
+                    // Add active class to current
+                    if (current && navLinkMap.has(current)) {
+                        navLinkMap.get(current).classList.add('active');
+                    }
+
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
