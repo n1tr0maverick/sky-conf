@@ -450,6 +450,7 @@ img {
     color: var(--text-muted);
     font-size: 0.85rem;
     animation: bounce 2s ease-in-out infinite;
+    cursor: pointer;
 }
 
 .mouse {
@@ -2080,4 +2081,25 @@ img {
         width: 80px;
         height: 80px;
     }
+}
+
+/* ===== Accessibility & Focus Styles ===== */
+.speaker-card:focus-visible,
+.conference-speaker-card:focus-visible,
+.initiator-card:focus-visible,
+.carousel-slide:focus-visible,
+.scroll-indicator:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+}
+
+.scroll-indicator:focus-visible {
+    outline-offset: 8px;
+}
+
+/* Ensure focus is visible on dark backgrounds */
+*:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
 }
