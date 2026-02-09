@@ -8,3 +8,7 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+
+## 2026-05-20 - [Scroll Spy Optimization & Fix]
+**Learning:** Performance optimization can uncover functional bugs. The scroll spy logic was consuming CPU (~800 layout reads/scroll) but doing nothing visually because the `.active` CSS class was missing.
+**Action:** Always verify the *visual* output of the feature being optimized, not just the code performance metrics. Speed is useless if the feature is broken.
