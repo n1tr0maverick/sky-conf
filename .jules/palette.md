@@ -1,0 +1,3 @@
+## 2025-05-20 - Dark Theme Accessibility Gaps
+**Learning:** The dark theme relies heavily on background colors and glassmorphism, but lacks specific `:focus-visible` styles. The default browser focus ring is often invisible against dark backgrounds (e.g., `#0a0f1a`). Additionally, critical interactive elements like speaker cards are implemented as `div`s with `onclick` handlers but without keyboard support (`role="button"`, `tabindex="0"`), making them inaccessible to keyboard users.
+**Action:** Always implement custom `:focus-visible` styles with high contrast (e.g., `outline: 2px solid var(--accent-primary)`) for dark themes. Ensure all interactive `div`s are keyboard-accessible or replaced with `<button>` elements.
