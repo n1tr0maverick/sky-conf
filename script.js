@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,17 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility =====
+function initAccessibility() {
+    document.addEventListener('keydown', (e) => {
+        // Trigger click on Enter or Space for elements with role="button"
+        if (e.target.getAttribute('role') === 'button' && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            e.target.click();
+        }
+    });
 }
 
 // Make functions globally available for inline onclick handlers
