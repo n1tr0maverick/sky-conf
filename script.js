@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -504,3 +505,33 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.toggleBio = toggleBio;
 window.openSpeakerBio = openSpeakerBio;
+
+// ===== Accessibility Features =====
+function initAccessibility() {
+    // Add keyboard support to interactive div elements
+    const interactiveSelectors = [
+        '.speaker-card[onclick]',
+        '.initiator-card[onclick]',
+        '.carousel-slide[data-action]'
+    ];
+
+    const interactiveElements = document.querySelectorAll(interactiveSelectors.join(','));
+
+    interactiveElements.forEach(el => {
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+    });
+
+    // Global keyboard listener for these custom buttons
+    document.addEventListener('keydown', (e) => {
+        // Only trigger if it's one of our manually roled buttons
+        if ((e.key === 'Enter' || e.key === ' ') &&
+            e.target.getAttribute('role') === 'button' &&
+            e.target.getAttribute('tabindex') === '0') {
+
+            // Prevent default scrolling for Space
+            if (e.key === ' ') e.preventDefault();
+            e.target.click();
+        }
+    });
+}
