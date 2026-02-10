@@ -8,3 +8,7 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+
+## 2026-05-21 - [Parallax Optimization Scope]
+**Learning:** Attempted to optimize parallax by checking visibility of Hero section, but realized `.gradient-orb` class is reused in the footer/register section. Optimization would have frozen the footer orbs.
+**Action:** When optimizing effects based on scroll position, verify if the target selector is used in multiple sections before assuming a single viewport scope.
