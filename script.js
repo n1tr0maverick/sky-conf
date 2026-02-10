@@ -348,6 +348,26 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache nav links for O(1) access
+    const navLinksMap = new Map();
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const id = href.substring(1);
+            navLinksMap.set(id, link);
+        }
+    });
+
+    // Initialize lastActiveId from current DOM state to prevent double highlighting
+    let lastActiveId = '';
+    const activeLink = document.querySelector('.nav-links a.active');
+    if (activeLink) {
+        const href = activeLink.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            lastActiveId = href.substring(1);
+        }
+    }
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -364,12 +384,18 @@ function initOptimizedScrollHandlers() {
                     }
                 });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Only update DOM if active section changes
+                if (current !== lastActiveId) {
+                    // Remove active class from previous
+                    if (lastActiveId && navLinksMap.has(lastActiveId)) {
+                        navLinksMap.get(lastActiveId).classList.remove('active');
                     }
-                });
+                    // Add active class to current
+                    if (current && navLinksMap.has(current)) {
+                        navLinksMap.get(current).classList.add('active');
+                    }
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
