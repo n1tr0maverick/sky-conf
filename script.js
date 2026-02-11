@@ -344,38 +344,76 @@ function initScrollAnimations() {
 
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
-    const sections = document.querySelectorAll('section[id]');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache for Nav Links
+    const navLinksMap = new Map();
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            navLinksMap.set(href.substring(1), link);
+        }
+    });
+
+    // Cache for Sections
+    let sectionOffsets = [];
+
+    function updateSectionOffsets() {
+        sectionOffsets = sections.map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100 // Offset for navbar
+        }));
+        // Sort by top position
+        sectionOffsets.sort((a, b) => a.top - b.top);
+    }
+
+    // Initial calculation
+    updateSectionOffsets();
+
+    // Update on resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateSectionOffsets, 100);
+    }, { passive: true });
+
     let ticking = false;
+    let lastActiveId = '';
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
 
-                // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
-
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
                     const speed = 0.1 * (index + 1);
                     orb.style.transform = `translateY(${scrolled * speed}px)`;
                 });
+
+                // Active Navigation Highlight
+                let currentId = '';
+
+                // Find the current section
+                for (const section of sectionOffsets) {
+                    if (scrolled >= section.top) {
+                        currentId = section.id;
+                    } else {
+                        break;
+                    }
+                }
+
+                if (currentId !== lastActiveId) {
+                    if (lastActiveId && navLinksMap.has(lastActiveId)) {
+                        navLinksMap.get(lastActiveId).classList.remove('active');
+                    }
+                    if (currentId && navLinksMap.has(currentId)) {
+                        navLinksMap.get(currentId).classList.add('active');
+                    }
+                    lastActiveId = currentId;
+                }
 
                 ticking = false;
             });
