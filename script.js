@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -463,6 +464,12 @@ function closeModal(modalId) {
 // Toggle bio expansion in conference modals
 function toggleBio(card) {
     card.classList.toggle('expanded');
+
+    // Update ARIA state if element has aria-expanded
+    if (card.hasAttribute('aria-expanded')) {
+        card.setAttribute('aria-expanded', card.classList.contains('expanded'));
+    }
+
     const toggle = card.querySelector('.read-more-toggle');
     if (toggle) {
         toggle.textContent = card.classList.contains('expanded') ? 'Show less' : 'Read more ↓';
@@ -497,6 +504,19 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility =====
+function initAccessibility() {
+    // Add keyboard support for elements with role="button"
+    document.querySelectorAll('[role="button"]').forEach(button => {
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                button.click();
+            }
+        });
+    });
 }
 
 // Make functions globally available for inline onclick handlers
