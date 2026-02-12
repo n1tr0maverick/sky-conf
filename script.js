@@ -348,7 +348,39 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache for Nav Links
+    const navLinksMap = new Map();
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            navLinksMap.set(href.substring(1), link);
+        }
+    });
+
+    // Cache for Sections
+    let sectionOffsets = [];
+
+    function updateSectionOffsets() {
+        sectionOffsets = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+        // Sort by top position
+        sectionOffsets.sort((a, b) => a.top - b.top);
+    }
+
+    // Initial calculation
+    updateSectionOffsets();
+
+    // Update on resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateSectionOffsets, 100);
+    }, { passive: true });
+
     let ticking = false;
+    let lastActiveId = ''; // Track last active ID to avoid redundant DOM updates
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -356,20 +388,29 @@ function initOptimizedScrollHandlers() {
                 const scrolled = window.scrollY;
 
                 // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
+                let currentId = '';
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Find current section (using cached offsets)
+                for (const section of sectionOffsets) {
+                    if (scrolled >= section.top) {
+                        currentId = section.id;
                     }
-                });
+                }
+
+                // Only update DOM if active section changed
+                if (currentId !== lastActiveId) {
+                    // Remove active class from previous
+                    if (lastActiveId && navLinksMap.has(lastActiveId)) {
+                        navLinksMap.get(lastActiveId).classList.remove('active');
+                    }
+
+                    // Add active class to current
+                    if (currentId && navLinksMap.has(currentId)) {
+                        navLinksMap.get(currentId).classList.add('active');
+                    }
+
+                    lastActiveId = currentId;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
