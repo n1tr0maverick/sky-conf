@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -462,11 +463,26 @@ function closeModal(modalId) {
 
 // Toggle bio expansion in conference modals
 function toggleBio(card) {
-    card.classList.toggle('expanded');
+    const isExpanded = card.classList.toggle('expanded');
+    card.setAttribute('aria-expanded', isExpanded);
+
     const toggle = card.querySelector('.read-more-toggle');
     if (toggle) {
-        toggle.textContent = card.classList.contains('expanded') ? 'Show less' : 'Read more ↓';
+        toggle.textContent = isExpanded ? 'Show less' : 'Read more ↓';
     }
+}
+
+// ===== Accessibility Enhancements =====
+function initAccessibility() {
+    // Add keyboard support for interactive elements with role="button"
+    document.querySelectorAll('[role="button"]').forEach(el => {
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
 }
 
 // Open modal with a specific speaker's bio already expanded
