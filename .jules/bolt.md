@@ -8,3 +8,7 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+
+## 2026-02-05 - [Scroll Handler Refactor]
+**Learning:** `offsetTop` inside a scroll loop causes synchronous layout reflows (thrashing), even if throttled by `requestAnimationFrame`. Caching layout metrics on load/resize is critical for 60fps scrolling.
+**Action:** Always cache static layout metrics and only re-measure on resize.

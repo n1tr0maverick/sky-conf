@@ -345,9 +345,39 @@ function initScrollAnimations() {
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache for scroll performance
+    let sectionOffsets = [];
+    const navLinksMap = new Map();
+    let lastActiveId = '';
+
+    // Initialize cache
+    function updateSectionOffsets() {
+        sectionOffsets = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            offset: section.offsetTop - 100
+        })).sort((a, b) => a.offset - b.offset);
+
+        // Update map for O(1) access
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                navLinksMap.set(href.substring(1), link);
+            }
+        });
+    }
+
+    // Initial calculation
+    updateSectionOffsets();
+
+    // Recalculate on resize (throttled)
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateSectionOffsets, 100);
+    }, { passive: true });
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -356,20 +386,27 @@ function initOptimizedScrollHandlers() {
                 const scrolled = window.scrollY;
 
                 // Active Navigation Highlight
+                // Use cached offsets to find current section
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                for (const section of sectionOffsets) {
+                    if (scrolled >= section.offset) {
+                        current = section.id;
+                    } else {
+                        break;
                     }
-                });
+                }
+
+                // Only update DOM if active section changes
+                if (current !== lastActiveId) {
+                    const oldLink = navLinksMap.get(lastActiveId);
+                    if (oldLink) oldLink.classList.remove('active');
+
+                    const newLink = navLinksMap.get(current);
+                    if (newLink) newLink.classList.add('active');
+
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
