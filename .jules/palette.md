@@ -1,0 +1,3 @@
+## 2024-05-23 - Skip Links in Single-Page Apps
+**Learning:** For single-page applications with sticky navigation and deep scrolling content, a "Skip to Content" link is not just a "nice-to-have" but a critical navigation tool for keyboard users. Without it, users must tab through every single navigation link (which often includes mobile toggles, language switchers, etc.) just to reach the primary content they likely came to see.
+**Action:** Always check for skip links in the `<body>` of single-page sites. If missing, add one that targets the main content area (using `id` and `tabindex="-1"` if the target isn't natively focusable). ensure it's hidden visually but appears on focus.
