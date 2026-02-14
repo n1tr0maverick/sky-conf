@@ -344,10 +344,42 @@ function initScrollAnimations() {
 
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
+    // Cache for section offsets to avoid layout thrashing
+    let sectionOffsets = [];
+    const navLinksMap = new Map();
+    let lastActiveId = '';
+
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Initialize map for O(1) access and set initial active state
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        navLinksMap.set(href, link);
+        if (link.classList.contains('active')) {
+            lastActiveId = href.substring(1);
+        }
+    });
+
+    function updateSectionOffsets() {
+        sectionOffsets = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            offset: section.offsetTop - 100
+        })).sort((a, b) => a.offset - b.offset);
+    }
+
+    // Update offsets on load and resize
+    updateSectionOffsets();
+    window.addEventListener('load', updateSectionOffsets, { passive: true });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        // Debounce resize updates
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateSectionOffsets, 100);
+    }, { passive: true });
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -357,19 +389,28 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+                // Use cached offsets instead of reading DOM
+                for (let i = sectionOffsets.length - 1; i >= 0; i--) {
+                    if (scrolled >= sectionOffsets[i].offset) {
+                        current = sectionOffsets[i].id;
+                        break;
                     }
-                });
+                }
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Only update DOM if active section changes
+                if (current !== lastActiveId) {
+                    if (lastActiveId) {
+                        const oldLink = navLinksMap.get(`#${lastActiveId}`);
+                        if (oldLink) oldLink.classList.remove('active');
                     }
-                });
+
+                    if (current) {
+                        const newLink = navLinksMap.get(`#${current}`);
+                        if (newLink) newLink.classList.add('active');
+                    }
+
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
