@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,42 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility Support =====
+function initAccessibility() {
+    // Add global keyboard support for elements with role="button"
+    document.addEventListener('keydown', (e) => {
+        // Check for Enter or Space keys
+        if (e.key === 'Enter' || e.key === ' ') {
+            const target = e.target;
+
+            // Check if element is an interactive div (role="button" or tabindex="0")
+            // and NOT a native interactive element (button, a, input, textarea, select)
+            const isInteractiveDiv = (
+                target.getAttribute('role') === 'button' ||
+                target.getAttribute('tabindex') === '0'
+            );
+
+            const isNativeInteractive = (
+                target.tagName === 'BUTTON' ||
+                target.tagName === 'A' ||
+                target.tagName === 'INPUT' ||
+                target.tagName === 'TEXTAREA' ||
+                target.tagName === 'SELECT'
+            );
+
+            if (isInteractiveDiv && !isNativeInteractive) {
+                // Prevent default scrolling for Space key
+                if (e.key === ' ') {
+                    e.preventDefault();
+                }
+
+                // Trigger click
+                target.click();
+            }
+        }
+    });
 }
 
 // Make functions globally available for inline onclick handlers
