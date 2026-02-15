@@ -345,9 +345,47 @@ function initScrollAnimations() {
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache nav links: { [sectionId]: anchorElement }
+    const navLinksMap = {};
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const id = href.substring(1);
+            navLinksMap[id] = link;
+        }
+    });
+
+    // Cache section offsets: [{ id, offset }]
+    let sectionOffsets = [];
+
+    function calculateOffsets() {
+        sectionOffsets = [];
+        sections.forEach(section => {
+            // Using offsetTop - 100 to match original logic
+            sectionOffsets.push({
+                id: section.getAttribute('id'),
+                offset: section.offsetTop - 100
+            });
+        });
+        // Sort by offset just in case DOM order != visual order
+        sectionOffsets.sort((a, b) => a.offset - b.offset);
+    }
+
+    // Calculate initially and on resize/load
+    calculateOffsets();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(calculateOffsets, 100);
+    });
+
+    // Also recalculate on load to account for images/fonts
+    window.addEventListener('load', calculateOffsets);
+
+    let lastActiveId = '';
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -356,20 +394,24 @@ function initOptimizedScrollHandlers() {
                 const scrolled = window.scrollY;
 
                 // Active Navigation Highlight
+                // Find the last section where scrolled >= offset
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+                for (let i = sectionOffsets.length - 1; i >= 0; i--) {
+                    if (scrolled >= sectionOffsets[i].offset) {
+                        current = sectionOffsets[i].id;
+                        break;
                     }
-                });
+                }
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                if (current !== lastActiveId) {
+                    if (lastActiveId && navLinksMap[lastActiveId]) {
+                        navLinksMap[lastActiveId].classList.remove('active');
                     }
-                });
+                    if (current && navLinksMap[current]) {
+                        navLinksMap[current].classList.add('active');
+                    }
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
