@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -496,6 +497,35 @@ function openSpeakerBio(modalId, speakerId) {
                 speakerCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
         }
+    }
+}
+
+// ===== Accessibility =====
+function initAccessibility() {
+    // Add keyboard support for interactive cards
+    const interactiveSelectors = [
+        '.speaker-card[onclick]',
+        '.initiator-card[onclick]',
+        '.conference-speaker-card[onclick]',
+        '.carousel-slide'
+    ];
+
+    const interactiveElements = document.querySelectorAll(interactiveSelectors.join(', '));
+
+    interactiveElements.forEach(el => {
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
+        // Remove existing listener to avoid duplicates if re-initialized
+        el.removeEventListener('keydown', handleEnterKey);
+        el.addEventListener('keydown', handleEnterKey);
+    });
+}
+
+function handleEnterKey(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault(); // Prevent scrolling for Space
+        e.currentTarget.click();
     }
 }
 
