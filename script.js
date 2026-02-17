@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,18 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility =====
+function initAccessibility() {
+    // Handle keyboard interaction for elements with role="button"
+    document.addEventListener('keydown', (e) => {
+        // Trigger click on Enter or Space
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.getAttribute('role') === 'button') {
+            e.preventDefault(); // Prevent scrolling for Space
+            e.target.click();
+        }
+    });
 }
 
 // Make functions globally available for inline onclick handlers
