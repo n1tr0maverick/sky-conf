@@ -348,6 +348,22 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache for section offsets
+    let sectionOffsets = [];
+    let lastActiveId = '';
+
+    function updateOffsets() {
+        sectionOffsets = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+    }
+
+    // Initial calculation and update on resize/load
+    updateOffsets();
+    window.addEventListener('resize', updateOffsets, { passive: true });
+    window.addEventListener('load', updateOffsets, { passive: true }); // specific for lazy loaded images affecting layout
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -357,19 +373,23 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+                // Use cached offsets
+                sectionOffsets.forEach(section => {
+                    if (scrolled >= section.top) {
+                        current = section.id;
                     }
                 });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                // Only update DOM if active section changes
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
