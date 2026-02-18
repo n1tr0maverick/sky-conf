@@ -1622,6 +1622,13 @@ img {
     font-size: 0.85rem;
 }
 
+/* ===== Accessibility ===== */
+[role="button"]:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-lg); /* Match the card radius if possible, though outline usually follows border-radius in modern browsers */
+}
+
 /* ===== Responsive Design ===== */
 @media (max-width: 1024px) {
     .about-grid {

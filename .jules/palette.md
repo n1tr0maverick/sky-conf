@@ -1,0 +1,3 @@
+## 2024-05-24 - Retrofitting Interactive Divs for Accessibility
+**Learning:** The codebase heavily relies on `div` elements with `onclick` handlers for interactive cards (speakers, carousel), which makes them inaccessible to keyboard users. Converting these to native `<button>` elements would likely break existing Flexbox/Grid layouts due to browser default styles.
+**Action:** Use `role="button"` and `tabindex="0"` combined with a global `keydown` listener (handling Enter/Space) to retroactively make these elements accessible without risking layout regressions. Ensure distinct `:focus-visible` styles are added to provide visual feedback.
