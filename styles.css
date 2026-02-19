@@ -45,6 +45,22 @@
     box-sizing: border-box;
 }
 
+/* ===== Accessibility ===== */
+:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 4px;
+}
+
+/* Ensure custom interactive elements show focus */
+[role="button"]:focus {
+    outline: none;
+}
+
+[role="button"]:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 4px;
+}
+
 html {
     scroll-behavior: smooth;
 }
