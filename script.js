@@ -344,10 +344,35 @@ function initScrollAnimations() {
 
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache nav links by href for O(1) access
+    const navLinksMap = {};
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            const id = href.substring(1);
+            navLinksMap[id] = link;
+        }
+    });
+
+    // Cache section offsets
+    let sectionOffsets = [];
+    const updateOffsets = () => {
+        sectionOffsets = sections.map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100 // Pre-calculate threshold
+        }));
+    };
+
+    // Update on load and resize
+    updateOffsets();
+    window.addEventListener('resize', updateOffsets, { passive: true });
+    // Update again after load to account for images/fonts
+    window.addEventListener('load', updateOffsets);
+
+    let lastActiveId = '';
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -356,25 +381,35 @@ function initOptimizedScrollHandlers() {
                 const scrolled = window.scrollY;
 
                 // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
+                let currentId = '';
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Find the last section that we've scrolled past
+                for (const section of sectionOffsets) {
+                    if (scrolled >= section.top) {
+                        currentId = section.id;
                     }
-                });
+                }
+
+                // Only update DOM if state changed
+                if (currentId !== lastActiveId) {
+                    // Remove active class from previous
+                    if (lastActiveId && navLinksMap[lastActiveId]) {
+                        navLinksMap[lastActiveId].classList.remove('active');
+                    }
+
+                    // Add active class to current
+                    if (currentId && navLinksMap[currentId]) {
+                        navLinksMap[currentId].classList.add('active');
+                    }
+
+                    lastActiveId = currentId;
+                }
 
                 // Parallax Effect
+                // Optimized with translate3d for GPU acceleration
                 orbs.forEach((orb, index) => {
                     const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    orb.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
                 });
 
                 ticking = false;

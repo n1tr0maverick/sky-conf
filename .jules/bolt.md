@@ -8,3 +8,7 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+
+## 2026-10-24 - [Playwright Scroll Verification]
+**Learning:** CSS `html { scroll-behavior: smooth; }` can cause Playwright's `window.scrollTo` to be asynchronous, leading to race conditions in verification scripts where checks run before scrolling completes.
+**Action:** Always use `window.scrollTo({ top: y, behavior: 'instant' })` in verification scripts when precise scroll positioning is required immediately.
