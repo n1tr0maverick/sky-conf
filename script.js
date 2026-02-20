@@ -10,12 +10,27 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
         initLanguageToggle();
     }
 });
+
+// ===== Accessibility Features =====
+function initAccessibility() {
+    document.addEventListener('keydown', (e) => {
+        // Trigger click on Enter or Space for role="button" elements
+        if (e.key === 'Enter' || e.key === ' ') {
+            const target = e.target;
+            if (target && target.getAttribute('role') === 'button') {
+                e.preventDefault(); // Prevent scrolling for Space
+                target.click();
+            }
+        }
+    });
+}
 
 // ===== Navbar Scroll Effect =====
 function initNavbar() {
@@ -82,6 +97,9 @@ function initCarousel() {
     slides.forEach((_, index) => {
         const dot = document.createElement('span');
         dot.classList.add('dot');
+        dot.setAttribute('role', 'button');
+        dot.setAttribute('tabindex', '0');
+        dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
         if (index === 0) dot.classList.add('active');
         dot.addEventListener('click', () => goToSlide(index));
         dotsContainer.appendChild(dot);
