@@ -8,3 +8,7 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+
+## 2026-02-06 - [Redundant Scroll Logic]
+**Learning:** Synchronous DOM updates (remove/add class) in a scroll loop trigger redundant style recalculations even if the visual result is unchanged. Also, Playwright's `window.scrollTo` fights with CSS `scroll-behavior: smooth`.
+**Action:** Always cache state (`lastActiveId`) to block redundant updates, and disable smooth scroll during automated scroll testing.
