@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -504,3 +505,26 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.toggleBio = toggleBio;
 window.openSpeakerBio = openSpeakerBio;
+
+// ===== Accessibility Enhancements =====
+function initAccessibility() {
+    // Make interactive divs accessible (add role="button" and tabindex="0")
+    // Selects elements that have onclick or data-action attributes but aren't buttons/links
+    const interactiveSelectors = 'div[onclick], div[data-action]';
+    document.querySelectorAll(interactiveSelectors).forEach(el => {
+        if (!el.getAttribute('role')) el.setAttribute('role', 'button');
+        if (!el.getAttribute('tabindex')) el.setAttribute('tabindex', '0');
+    });
+
+    // Global keyboard listener for pseudo-buttons
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            const focused = document.activeElement;
+            // Check if the focused element is a pseudo-button (role="button" but not <button>)
+            if (focused && focused.getAttribute('role') === 'button' && focused.tagName !== 'BUTTON' && focused.tagName !== 'A') {
+                e.preventDefault(); // Prevent page scroll on Space
+                focused.click();
+            }
+        }
+    });
+}
