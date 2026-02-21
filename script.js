@@ -349,6 +349,7 @@ function initOptimizedScrollHandlers() {
     const orbs = document.querySelectorAll('.gradient-orb');
     
     let ticking = false;
+    let lastActiveId = '';
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -364,18 +365,25 @@ function initOptimizedScrollHandlers() {
                     }
                 });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                // Optimization: Only update DOM if section changes to avoid layout thrashing
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
-                });
+                // Optimization: Only animate parallax when visible
+                if (scrolled < window.innerHeight) {
+                    orbs.forEach((orb, index) => {
+                        const speed = 0.1 * (index + 1);
+                        orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+                }
 
                 ticking = false;
             });
