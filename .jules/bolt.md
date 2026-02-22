@@ -8,3 +8,7 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+
+## 2026-05-21 - [Testing Scroll Interactions]
+**Learning:** When testing scroll-driven UI updates (like active nav states) in Playwright, global CSS `scroll-behavior: smooth` can cause race conditions where `scrollIntoView` completes before the visual scroll finishes, leading to assertion failures.
+**Action:** Always inject `html { scroll-behavior: auto !important; }` in verification scripts when testing scroll offsets or visibility.
