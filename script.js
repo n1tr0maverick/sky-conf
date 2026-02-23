@@ -348,6 +348,34 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache section offsets to prevent layout thrashing
+    let sectionOffsets = [];
+
+    function updateSectionOffsets() {
+        sectionOffsets = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            // Pre-calculate trigger point (100px offset for navbar)
+            triggerPoint: section.offsetTop - 100
+        }));
+    }
+
+    // Initial calculation
+    updateSectionOffsets();
+
+    // Recalculate on resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateSectionOffsets, 100);
+    }, { passive: true });
+
+    // Recalculate on DOM changes (e.g. images loading, dynamic content)
+    const resizeObserver = new ResizeObserver(() => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateSectionOffsets, 100);
+    });
+    resizeObserver.observe(document.body);
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -357,10 +385,11 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+
+                // Use cached offsets instead of reading DOM properties
+                sectionOffsets.forEach(section => {
+                    if (scrolled >= section.triggerPoint) {
+                        current = section.id;
                     }
                 });
 
