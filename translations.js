@@ -3,6 +3,7 @@
 const translations = {
     en: {
         // Navigation
+        'nav.skip': 'Skip to content',
         'nav.about': 'About Us',
         'nav.editions': 'Previous Editions',
         'nav.register': 'Register',
@@ -195,6 +196,7 @@ const translations = {
     },
     pl: {
         // Navigation
+        'nav.skip': 'Przejdź do treści',
         'nav.about': 'O Nas',
         'nav.editions': 'Poprzednie Edycje',
         'nav.register': 'Rejestracja',

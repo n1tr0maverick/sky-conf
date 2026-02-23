@@ -57,6 +57,28 @@ body {
     overflow-x: hidden;
 }
 
+/* Accessibility - Skip Link */
+.skip-link {
+    position: fixed;
+    top: -100px;
+    left: 20px;
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    padding: 12px 24px;
+    z-index: 2000;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    transition: top 0.3s;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.skip-link:focus {
+    top: 20px;
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
 a {
     text-decoration: none;
     color: inherit;
