@@ -346,36 +346,104 @@ function initScrollAnimations() {
 function initOptimizedScrollHandlers() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
-    const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Split orbs into groups for optimized visibility checks
+    const allOrbs = Array.from(document.querySelectorAll('.gradient-orb'));
+    const heroOrbs = allOrbs.slice(0, 3).map((orb, i) => ({
+        element: orb,
+        speed: 0.1 * (i + 1)
+    }));
+    // Note: Register orbs start at index 3 in the original list
+    // Original speed logic: 0.1 * (index + 1) -> 0.4 and 0.5
+    const registerOrbs = allOrbs.slice(3).map((orb, i) => ({
+        element: orb,
+        speed: 0.1 * (i + 4)
+    }));
+
+    // Cache layout metrics to prevent reflows during scroll
+    let sectionMetrics = [];
+    let heroHeight = 0;
+    let registerSection = document.getElementById('register');
+    let registerMetrics = { top: 0, height: 0 };
+    let lastActiveId = null;
     let ticking = false;
     
+    // Function to update cached metrics
+    function updateMetrics() {
+        sectionMetrics = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100 // -100 offset from original logic
+        }));
+
+        const hero = document.querySelector('.hero');
+        if (hero) heroHeight = hero.offsetHeight;
+
+        if (registerSection) {
+            registerMetrics = {
+                top: registerSection.offsetTop,
+                height: registerSection.offsetHeight
+            };
+        }
+    }
+
+    // Initial cache update
+    updateMetrics();
+
+    // Update metrics on resize
+    window.addEventListener('resize', () => {
+        updateMetrics();
+    }, { passive: true });
+
+    // Use ResizeObserver for more robust updates (e.g. image loads)
+    const resizeObserver = new ResizeObserver(() => {
+        updateMetrics();
+    });
+    resizeObserver.observe(document.body);
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
+                const windowHeight = window.innerHeight;
 
-                // Active Navigation Highlight
+                // Active Navigation Highlight (Optimized)
+                // Find the current section using cached metrics
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+                for (const section of sectionMetrics) {
+                    if (scrolled >= section.top) {
+                        current = section.id;
                     }
-                });
+                }
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                // Only update DOM if active section changed
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
-                });
+                // Parallax Effect (Optimized)
+
+                // 1. Hero Orbs: Only animate if Hero section is visible
+                if (scrolled <= heroHeight) {
+                    heroOrbs.forEach(({ element, speed }) => {
+                        element.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+                }
+
+                // 2. Register Orbs: Only animate if Register section is in/near viewport
+                if (registerSection &&
+                    (scrolled + windowHeight > registerMetrics.top) &&
+                    (scrolled < registerMetrics.top + registerMetrics.height)) {
+
+                    registerOrbs.forEach(({ element, speed }) => {
+                        element.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+                }
 
                 ticking = false;
             });
