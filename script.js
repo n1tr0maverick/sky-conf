@@ -349,6 +349,7 @@ function initOptimizedScrollHandlers() {
     const orbs = document.querySelectorAll('.gradient-orb');
     
     let ticking = false;
+    let lastActiveId = '';
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -357,19 +358,25 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
+                // Iterate backwards to find the current section efficiently
+                for (let i = sections.length - 1; i >= 0; i--) {
+                    const section = sections[i];
+                    if (scrolled >= section.offsetTop - 100) {
                         current = section.getAttribute('id');
+                        break;
                     }
-                });
+                }
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                // Only update DOM if the active section has changed
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {

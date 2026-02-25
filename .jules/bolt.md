@@ -8,3 +8,7 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+
+## 2026-05-23 - [Scroll Handler Layout Thrashing]
+**Learning:** In scroll-heavy applications with parallax effects, even `requestAnimationFrame` throttling is insufficient if the callback invalidates layout (e.g., via `classList` changes) on every frame.
+**Action:** Always introduce state tracking (e.g., `lastActiveId`) to ensure DOM updates only occur when the logical state changes, preventing the "Force Reflow" cycle with subsequent layout reads (like `offsetTop`).
