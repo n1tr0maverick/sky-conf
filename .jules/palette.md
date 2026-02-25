@@ -1,0 +1,3 @@
+## 2024-05-23 - Accessibility Retrofitting Pattern
+**Learning:** The codebase relies heavily on `div` elements with `onclick` handlers for interactivity (e.g., speaker cards). These lack native keyboard accessibility and semantic roles. A consistent pattern to fix this is to query these elements (`[onclick]`), add `role="button"`, `tabindex="0"`, and attach a `keydown` listener for Enter/Space to trigger the click handler. This avoids rewriting the entire HTML structure while significantly improving accessibility.
+**Action:** Apply this pattern when encountering other non-semantic interactive elements in this project.
