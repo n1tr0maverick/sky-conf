@@ -348,6 +348,23 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache layout metrics to avoid reading offsetTop during scroll
+    let sectionPositions = [];
+    let lastActiveId = '';
+
+    function updateLayoutMetrics() {
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100, // Offset for fixed navbar
+            bottom: section.offsetTop + section.offsetHeight - 100
+        }));
+    }
+
+    // Initial calculation and updates on resize/load
+    updateLayoutMetrics();
+    window.addEventListener('resize', updateLayoutMetrics, { passive: true });
+    window.addEventListener('load', updateLayoutMetrics, { passive: true });
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -357,19 +374,24 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Use cached metrics
+                for (const section of sectionPositions) {
+                    if (scrolled >= section.top) {
+                        current = section.id;
                     }
-                });
+                }
+
+                // Only update DOM if active section changed
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
