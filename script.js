@@ -344,10 +344,32 @@ function initScrollAnimations() {
 
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
-    const sections = document.querySelectorAll('section[id]');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Cache section positions to avoid reflows during scroll
+    const sectionPositions = new Map();
+    let lastActiveId = '';
+
+    function updateSectionPositions() {
+        sections.forEach(section => {
+            sectionPositions.set(section.getAttribute('id'), section.offsetTop - 100);
+        });
+    }
+
+    // Update cache on load, resize, and dynamic content changes
+    window.addEventListener('load', updateSectionPositions);
+    window.addEventListener('resize', updateSectionPositions);
+
+    const resizeObserver = new ResizeObserver(() => {
+        updateSectionPositions();
+    });
+    resizeObserver.observe(document.body);
+
+    // Initial calculation
+    updateSectionPositions();
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -357,19 +379,25 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Use cached positions
+                for (const section of sections) {
+                    const id = section.getAttribute('id');
+                    if (sectionPositions.has(id) && scrolled >= sectionPositions.get(id)) {
+                        current = id;
                     }
-                });
+                }
+
+                // Only update DOM if active section changes
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
