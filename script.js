@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,39 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility Enhancements =====
+function initAccessibility() {
+    // Select all elements with onclick attribute that aren't natively interactive
+    const clickableDivs = document.querySelectorAll('[onclick]:not(button):not(a):not(input)');
+
+    // Also include elements that have click listeners added via JS (like carousel slides)
+    const carouselSlides = document.querySelectorAll('.carousel-slide');
+
+    const allInteractiveElements = [...clickableDivs, ...carouselSlides];
+
+    allInteractiveElements.forEach(el => {
+        // Add role="button" if not present
+        if (!el.hasAttribute('role')) {
+            el.setAttribute('role', 'button');
+        }
+
+        // Add tabindex="0" to make it focusable
+        if (!el.hasAttribute('tabindex')) {
+            el.setAttribute('tabindex', '0');
+        }
+
+        // Add keydown listener for Enter and Space keys
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault(); // Prevent scrolling for Space
+
+                // Trigger the click event
+                el.click();
+            }
+        });
+    });
 }
 
 // Make functions globally available for inline onclick handlers
