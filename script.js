@@ -348,7 +348,96 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Wrap orbs for parallax to avoid overriding CSS animations
+    const orbWrappers = [];
+    orbs.forEach((orb) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'gradient-orb-wrapper';
+        wrapper.style.position = 'absolute';
+        wrapper.style.inset = '0';
+        wrapper.style.pointerEvents = 'none';
+        wrapper.style.zIndex = '0';
+
+        orb.parentNode.insertBefore(wrapper, orb);
+        wrapper.appendChild(orb);
+        orbWrappers.push(wrapper);
+    });
+
+    // Cache section metrics and orb coordinates
+    let sectionMetrics = [];
+    let orbMetrics = [];
+
+    function calculateMetrics() {
+        sectionMetrics = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100,
+            bottom: section.offsetTop + section.offsetHeight - 100
+        }));
+
+        orbMetrics = orbWrappers.map((wrapper, index) => {
+            const parentSection = wrapper.closest('section');
+            const parentTop = parentSection ? parentSection.offsetTop : 0;
+            const parentBottom = parentSection ? parentTop + parentSection.offsetHeight : 0;
+            return {
+                wrapper: wrapper,
+                speed: 0.1 * (index + 1),
+                parentTop: parentTop,
+                parentBottom: parentBottom
+            };
+        });
+    }
+
+    // Calculate initial metrics
+    calculateMetrics();
+
+    // Recalculate metrics on resize and dynamic content changes
+    window.addEventListener('resize', calculateMetrics, { passive: true });
+    window.addEventListener('load', calculateMetrics, { passive: true });
+
+    if (window.ResizeObserver) {
+        const resizeObserver = new ResizeObserver(() => {
+            calculateMetrics();
+        });
+        resizeObserver.observe(document.body);
+    }
+
     let ticking = false;
+    let lastActiveId = '';
+
+    // Function to calculate and update active navigation link
+    function updateActiveNavigation(scrolled) {
+        let current = '';
+
+        // Find current section based on cached metrics
+        for (const metric of sectionMetrics) {
+            if (scrolled >= metric.top) {
+                current = metric.id;
+            }
+        }
+
+        // Handle scrolling to bottom
+        if (scrolled + window.innerHeight >= document.documentElement.scrollHeight - 100) {
+            if (sectionMetrics.length > 0) {
+                current = sectionMetrics[sectionMetrics.length - 1].id;
+            }
+        }
+
+        // Only update DOM if active section changed
+        if (current !== lastActiveId && current !== '') {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+            lastActiveId = current;
+        }
+    }
+
+    // Initialize navigation state
+    setTimeout(() => {
+        updateActiveNavigation(window.scrollY);
+    }, 100);
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -356,25 +445,15 @@ function initOptimizedScrollHandlers() {
                 const scrolled = window.scrollY;
 
                 // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                updateActiveNavigation(scrolled);
 
                 // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                orbMetrics.forEach((metric) => {
+                    // Check if parent section is in viewport
+                    const isVisible = (scrolled + window.innerHeight > metric.parentTop) && (scrolled < metric.parentBottom);
+                    if (isVisible) {
+                        metric.wrapper.style.transform = `translate3d(0, ${scrolled * metric.speed}px, 0)`;
+                    }
                 });
 
                 ticking = false;
