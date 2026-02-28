@@ -1,0 +1,3 @@
+## 2024-05-24 - Retrofitting Interactive Divs and Focus Styles
+**Learning:** `onclick` is used on non-interactive `div` elements, breaking keyboard navigation, and there are no `:focus-visible` styles to provide visual feedback for focus.
+**Action:** Retrofit these `div` elements with `role="button"`, `tabindex="0"`, and `keydown` triggers for 'Enter' and 'Space', alongside adding global `:focus-visible` styles using `outline: 2px solid var(--accent-primary)` and `outline-offset: 4px`.
