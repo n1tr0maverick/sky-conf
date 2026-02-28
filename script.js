@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,33 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility Enhancements =====
+function initAccessibility() {
+    const interactiveElements = document.querySelectorAll('[onclick], .carousel-slide');
+
+    interactiveElements.forEach(el => {
+        const tagName = el.tagName.toLowerCase();
+        // Skip native interactive elements
+        if (['button', 'a', 'input', 'select', 'textarea'].includes(tagName)) return;
+
+        // Add roles and tab indices if not present
+        if (!el.hasAttribute('role')) {
+            el.setAttribute('role', 'button');
+        }
+        if (!el.hasAttribute('tabindex')) {
+            el.setAttribute('tabindex', '0');
+        }
+
+        // Add keydown listener to trigger click on Enter or Space
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
 }
 
 // Make functions globally available for inline onclick handlers
