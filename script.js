@@ -348,6 +348,43 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    let sectionPositions = [];
+    let lastActiveId = '';
+
+    // Function to calculate and cache section positions
+    function updateSectionPositions() {
+        sectionPositions = [];
+        sections.forEach(section => {
+            sectionPositions.push({
+                id: section.getAttribute('id'),
+                top: section.offsetTop - 100
+            });
+        });
+    }
+
+    // Initialize cache and state
+    updateSectionPositions();
+
+    // Update cache on resize and dynamic content changes
+    window.addEventListener('load', updateSectionPositions);
+    window.addEventListener('resize', updateSectionPositions);
+    const resizeObserver = new ResizeObserver(updateSectionPositions);
+    resizeObserver.observe(document.body);
+
+    let registerTop = 0;
+    let registerBottom = 0;
+
+    function updateRegisterSectionBounds() {
+        const registerSection = document.getElementById('register');
+        if (registerSection) {
+            registerTop = registerSection.offsetTop;
+            registerBottom = registerTop + registerSection.offsetHeight;
+        }
+    }
+
+    window.addEventListener('load', updateRegisterSectionBounds);
+    window.addEventListener('resize', updateRegisterSectionBounds);
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
@@ -357,24 +394,44 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+
+                // Find current section from cache
+                sectionPositions.forEach(pos => {
+                    if (scrolled >= pos.top) {
+                        current = pos.id;
                     }
                 });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Edge case: if reached the absolute bottom, activate the last section
+                if (scrolled + window.innerHeight >= document.documentElement.scrollHeight - 10) {
+                    if (sectionPositions.length > 0) {
+                        current = sectionPositions[sectionPositions.length - 1].id;
                     }
-                });
+                }
+
+                // Only update DOM if active section changed
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
+                // Optimize orb animation by only calculating transform if in viewport
                 orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    // Orbs 0,1,2 are in hero section (top). Orbs 3,4 are in register section.
+                    const isVisible = index < 3 ?
+                        scrolled < window.innerHeight * 1.5 : // Hero orbs
+                        (scrolled > registerTop - window.innerHeight && scrolled < registerBottom); // Register orbs
+
+                    if (isVisible) {
+                        const speed = 0.1 * (index + 1);
+                        orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    }
                 });
 
                 ticking = false;
