@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -504,3 +505,26 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.toggleBio = toggleBio;
 window.openSpeakerBio = openSpeakerBio;
+
+// ===== Accessibility Focus Support =====
+function initAccessibility() {
+    // Make elements with onclick accessible via keyboard
+    const clickableElements = document.querySelectorAll('[onclick]:not(button):not(a):not(input), .carousel-slide');
+
+    clickableElements.forEach(el => {
+        if (!el.hasAttribute('role')) {
+            el.setAttribute('role', 'button');
+        }
+        if (!el.hasAttribute('tabindex')) {
+            el.setAttribute('tabindex', '0');
+        }
+
+        // Add keyboard support (Enter/Space) to trigger the click
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault(); // Prevent default scroll for space
+                el.click();
+            }
+        });
+    });
+}
