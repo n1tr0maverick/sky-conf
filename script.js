@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,26 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility =====
+function initAccessibility() {
+    // Retrofit elements with onclick handlers that aren't native interactive elements
+    const interactiveElements = document.querySelectorAll('[onclick]:not(button):not(a):not(input), .carousel-slide');
+
+    interactiveElements.forEach(el => {
+        // Only set these if they aren't already set
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
+        // Add keyboard support for Space (32) and Enter (13)
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
 }
 
 // Make functions globally available for inline onclick handlers

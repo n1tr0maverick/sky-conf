@@ -1,0 +1,3 @@
+## 2024-05-18 - Retrofitting Interactive Divs
+**Learning:** This codebase relies heavily on `<div onclick="...">` for complex interactions like opening speaker bios or modals (e.g., `.initiator-card`, `.speaker-card`, `.carousel-slide`). These lack native keyboard support and semantic meaning for screen readers.
+**Action:** Created a reusable `initAccessibility()` script that automatically adds `role="button"`, `tabindex="0"`, and `keydown` (Enter/Space) handlers to any non-native element with an `onclick` attribute or `.carousel-slide` class. This pattern can be applied across the project to quickly retrofit a11y without needing to rewrite all HTML markup.
