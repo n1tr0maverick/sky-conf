@@ -346,9 +346,78 @@ function initScrollAnimations() {
 function initOptimizedScrollHandlers() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
-    const orbs = document.querySelectorAll('.gradient-orb');
+    const orbWrappers = document.querySelectorAll('.orb-wrapper');
     
+    let sectionPositions = [];
+    let orbData = [];
+    let lastActiveId = null;
     let ticking = false;
+
+    function calculateLayout() {
+        // Cache section positions
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+
+        // Cache orb data based on parent visibility
+        orbData = Array.from(orbWrappers).map((wrapper, index) => {
+            const parent = wrapper.closest('section');
+            return {
+                element: wrapper,
+                speed: 0.1 * (index + 1),
+                parentTop: parent ? parent.offsetTop : 0,
+                parentHeight: parent ? parent.offsetHeight : window.innerHeight
+            };
+        });
+
+        // Initialize active state based on current scroll
+        updateActiveNav(window.scrollY);
+    }
+
+    function updateActiveNav(scrolled) {
+        let current = '';
+
+        // Check if we've reached the bottom of the page
+        const isAtBottom = (window.innerHeight + scrolled) >= (document.body.offsetHeight - 10);
+
+        if (isAtBottom && sectionPositions.length > 0) {
+            current = sectionPositions[sectionPositions.length - 1].id;
+        } else {
+            for (let i = sectionPositions.length - 1; i >= 0; i--) {
+                if (scrolled >= sectionPositions[i].top) {
+                    current = sectionPositions[i].id;
+                    break;
+                }
+            }
+        }
+
+        if (current !== lastActiveId) {
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            lastActiveId = current;
+        }
+    }
+
+    // Initial calculation
+    calculateLayout();
+
+    // Recalculate on load and resize
+    window.addEventListener('load', calculateLayout);
+    window.addEventListener('resize', calculateLayout);
+
+    // Use ResizeObserver for dynamic content changes
+    if ('ResizeObserver' in window) {
+        const resizeObserver = new ResizeObserver(() => {
+            calculateLayout();
+        });
+        resizeObserver.observe(document.body);
+    }
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -356,25 +425,17 @@ function initOptimizedScrollHandlers() {
                 const scrolled = window.scrollY;
 
                 // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
+                updateActiveNav(scrolled);
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                // Parallax Effect - Only update visible orbs
+                const viewportBottom = scrolled + window.innerHeight;
 
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                orbData.forEach(data => {
+                    const parentBottom = data.parentTop + data.parentHeight;
+                    // Check if parent section is visible
+                    if (parentBottom > scrolled && data.parentTop < viewportBottom) {
+                        data.element.style.transform = `translate3d(0, ${scrolled * data.speed}px, 0)`;
+                    }
                 });
 
                 ticking = false;
