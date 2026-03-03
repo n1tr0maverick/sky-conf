@@ -8,3 +8,7 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+
+## $(date +%Y-%m-%d) - [Scroll Event Layout Thrashing and Redundant DOM Writes]
+**Learning:** During continuous scroll events, repeatedly reading \`offsetTop\` forces synchronous layout recalculations, causing severe performance degradation. Additionally, executing \`classList.add/remove\` redundantly even when the class state hasn't changed triggers unnecessary style recalculations. Parallax animations can also be heavy if calculated for off-screen elements or lacking GPU acceleration (\`translateY\` vs \`translate3d\`).
+**Action:** When implementing scroll-driven active navigation or parallax effects, cache layout metrics (\`offsetTop\`, \`offsetHeight\`) on \`load\`, \`resize\`, and via \`ResizeObserver\`. Use state tracking variables (\`lastActiveId\`) to update the DOM only when the active section changes. Limit parallax calculations to elements inside the visible viewport and use \`translate3d\` to offload rendering to the GPU.
