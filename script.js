@@ -344,45 +344,128 @@ function initScrollAnimations() {
 
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const orbs = document.querySelectorAll('.gradient-orb');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+    const orbs = Array.from(document.querySelectorAll('.gradient-orb'));
     
+    // Cache layout metrics to avoid DOM reads during scroll
+    let sectionPositions = [];
+    let orbData = [];
+    let lastActiveId = null;
     let ticking = false;
     
+    function calculateMetrics() {
+        // Cache section positions
+        sectionPositions = sections.map(section => ({
+            id: section.id,
+            top: section.offsetTop - 100,
+            bottom: section.offsetTop + section.offsetHeight - 100
+        }));
+
+        // Cache orb data including their parent container's bounds
+        orbData = orbs.map((orb, index) => {
+            const parent = orb.closest('section') || document.body;
+            // Handle cases where parent might not be a section (like in hero or register)
+            const parentTop = parent.offsetTop || 0;
+            const parentHeight = parent.offsetHeight || window.innerHeight;
+
+            return {
+                element: orb,
+                speed: 0.1 * (index + 1),
+                parentTop: parentTop,
+                parentBottom: parentTop + parentHeight,
+                // For Hero section orbs (no section wrapper or top=0), make sure they animate early
+                isHero: parentTop === 0
+            };
+        });
+
+        // Initial state update
+        updateScrollState();
+    }
+
+    // Update caches when layout changes
+    window.addEventListener('load', calculateMetrics);
+    window.addEventListener('resize', calculateMetrics);
+
+    // Handle dynamic content changes (like image loads or tab switches)
+    if ('ResizeObserver' in window) {
+        const resizeObserver = new ResizeObserver(() => {
+            // Debounce the recalculation to avoid thrashing during rapid resizes
+            requestAnimationFrame(calculateMetrics);
+        });
+        resizeObserver.observe(document.body);
+    } else {
+        // Fallback for older browsers
+        setTimeout(calculateMetrics, 1000);
+    }
+
+    function updateScrollState() {
+        const scrolled = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+
+        // 1. Active Navigation Highlight
+        let currentId = '';
+
+        // Check if we're at the very bottom of the page
+        if (scrolled + viewportHeight >= documentHeight - 10) {
+            // We're at the bottom, select the last section
+            if (sectionPositions.length > 0) {
+                currentId = sectionPositions[sectionPositions.length - 1].id;
+            }
+        } else {
+            // Find the current section
+            // Iterate backwards to find the deepest section we've scrolled past
+            for (let i = sectionPositions.length - 1; i >= 0; i--) {
+                if (scrolled >= sectionPositions[i].top) {
+                    currentId = sectionPositions[i].id;
+                    break;
+                }
+            }
+        }
+
+        // Only update DOM if the active section changed
+        if (currentId !== lastActiveId) {
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === `#${currentId}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            lastActiveId = currentId;
+        }
+
+        // 2. Parallax Effect with Visibility Check & GPU Acceleration
+        orbData.forEach(data => {
+            // Only animate if the orb's container is near or in the viewport
+            // Add a buffer of viewport height so it starts animating just before coming into view
+            const isVisible = data.isHero ?
+                (scrolled < viewportHeight * 1.5) : // Hero orbs
+                (scrolled + viewportHeight > data.parentTop && scrolled < data.parentBottom); // Other orbs
+
+            if (isVisible) {
+                // Use translate3d for GPU acceleration
+                data.element.style.transform = `translate3d(0, ${scrolled * data.speed}px, 0)`;
+            }
+        });
+    }
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
-                const scrolled = window.scrollY;
-
-                // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
-
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
-                });
-
+                updateScrollState();
                 ticking = false;
             });
             ticking = true;
         }
     }, { passive: true });
+
+    // Initial calculation
+    calculateMetrics();
 }
+
 
 // ===== Counter Animation for Statistics (if added) =====
 function animateCounter(element, target, duration = 2000) {
