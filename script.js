@@ -348,33 +348,97 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    let sectionPositions = [];
+    let orbPositions = [];
+    let lastActiveId = '';
+
+    // Cache positions to avoid layout thrashing (DOM reads)
+    function calculatePositions() {
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+
+        // Get absolute position of orbs relative to the document
+        orbPositions = Array.from(orbs).map(orb => {
+            // Remove transform temporarily to get true original position
+            const currentTransform = orb.style.transform;
+            orb.style.transform = 'none';
+            const rect = orb.getBoundingClientRect();
+            const top = rect.top + window.scrollY;
+            const height = orb.offsetHeight;
+            orb.style.transform = currentTransform;
+
+            return {
+                element: orb,
+                top: top,
+                height: height
+            };
+        });
+
+        // Initialize active section on load
+        updateActiveSection(window.scrollY);
+    }
+
+    // Initial calculation and updates on resize/load
+    calculatePositions();
+    window.addEventListener('resize', calculatePositions, { passive: true });
+    window.addEventListener('load', calculatePositions, { passive: true });
+
+    function updateActiveSection(scrolled) {
+        let current = '';
+
+        // Find current section
+        sectionPositions.forEach(section => {
+            if (scrolled >= section.top) {
+                current = section.id;
+            }
+        });
+
+        // Also check if we're at the bottom of the page
+        if (sectionPositions.length > 0 && scrolled + window.innerHeight >= document.documentElement.scrollHeight - 10) {
+            current = sectionPositions[sectionPositions.length - 1].id;
+        }
+
+        // Only update DOM if active section changed
+        if (current !== lastActiveId) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+            lastActiveId = current;
+        }
+    }
+
     let ticking = false;
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
+                const windowHeight = window.innerHeight;
 
                 // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
+                updateActiveSection(scrolled);
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
-
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
+                // Parallax Effect - Only animate visible orbs
+                orbPositions.forEach((orbData, index) => {
                     const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    const displacement = scrolled * speed;
+
+                    // The actual top position includes the dynamic displacement
+                    const actualTop = orbData.top + displacement;
+
+                    // Check if the orb is currently in or near the viewport
+                    const isVisible = (actualTop < scrolled + windowHeight + 500) &&
+                                      (actualTop + orbData.height > scrolled - 500);
+
+                    if (isVisible) {
+                        // Using translate3d for GPU acceleration
+                        orbData.element.style.transform = `translate3d(0, ${displacement}px, 0)`;
+                    }
                 });
 
                 ticking = false;
