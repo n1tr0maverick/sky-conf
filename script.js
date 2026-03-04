@@ -10,12 +10,40 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
         initLanguageToggle();
     }
 });
+
+// ===== Accessibility =====
+function initAccessibility() {
+    const interactables = document.querySelectorAll('.carousel-slide, [onclick]');
+
+    interactables.forEach(el => {
+        // Skip elements that are naturally keyboard accessible
+        if (el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT') return;
+
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+
+        // Add keyboard trigger for click events
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault(); // Prevent page scroll for Space
+                el.click();
+            }
+        });
+    });
+
+    // Initialize aria-expanded for expandable cards
+    const expandableCards = document.querySelectorAll('.conference-speaker-card');
+    expandableCards.forEach(card => {
+        card.setAttribute('aria-expanded', 'false');
+    });
+}
 
 // ===== Navbar Scroll Effect =====
 function initNavbar() {
@@ -454,6 +482,7 @@ function closeModal(modalId) {
         // Collapse all expanded bios when closing
         modal.querySelectorAll('.conference-speaker-card.expanded').forEach(card => {
             card.classList.remove('expanded');
+            card.setAttribute('aria-expanded', 'false');
             const toggle = card.querySelector('.read-more-toggle');
             if (toggle) toggle.textContent = 'Read more ↓';
         });
@@ -462,10 +491,11 @@ function closeModal(modalId) {
 
 // Toggle bio expansion in conference modals
 function toggleBio(card) {
-    card.classList.toggle('expanded');
+    const isExpanded = card.classList.toggle('expanded');
+    card.setAttribute('aria-expanded', isExpanded);
     const toggle = card.querySelector('.read-more-toggle');
     if (toggle) {
-        toggle.textContent = card.classList.contains('expanded') ? 'Show less' : 'Read more ↓';
+        toggle.textContent = isExpanded ? 'Show less' : 'Read more ↓';
     }
 }
 
@@ -476,6 +506,7 @@ function openSpeakerBio(modalId, speakerId) {
         // First collapse any previously expanded cards
         modal.querySelectorAll('.conference-speaker-card.expanded').forEach(card => {
             card.classList.remove('expanded');
+            card.setAttribute('aria-expanded', 'false');
             const toggle = card.querySelector('.read-more-toggle');
             if (toggle) toggle.textContent = 'Read more ↓';
         });
@@ -488,6 +519,7 @@ function openSpeakerBio(modalId, speakerId) {
         const speakerCard = document.getElementById(speakerId);
         if (speakerCard) {
             speakerCard.classList.add('expanded');
+            speakerCard.setAttribute('aria-expanded', 'true');
             const toggle = speakerCard.querySelector('.read-more-toggle');
             if (toggle) toggle.textContent = 'Show less';
             
