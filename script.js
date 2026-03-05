@@ -348,40 +348,111 @@ function initOptimizedScrollHandlers() {
     const navLinks = document.querySelectorAll('.nav-links a');
     const orbs = document.querySelectorAll('.gradient-orb');
     
+    // Performance: Cache section positions and calculate orb metrics to avoid layout thrashing
+    let sectionCache = [];
+    let orbCache = [];
+    let lastActiveId = null;
     let ticking = false;
+    let windowHeight = window.innerHeight;
+    let docHeight = document.documentElement.scrollHeight;
     
+    function cacheMetrics() {
+        windowHeight = window.innerHeight;
+        docHeight = document.documentElement.scrollHeight;
+
+        // Cache Sections
+        sectionCache = Array.from(sections).map(section => ({
+            id: section.id,
+            top: section.offsetTop - 100
+        }));
+
+        // Determine correct scrolling parent bounds for orbs
+        orbCache = Array.from(orbs).map((orb, index) => {
+            // Remove transform temporarily for accurate bounding box
+            const prevTransform = orb.style.transform;
+            orb.style.transform = 'none';
+            const rect = orb.getBoundingClientRect();
+            orb.style.transform = prevTransform;
+
+            return {
+                element: orb,
+                speed: 0.1 * (index + 1),
+                absoluteTop: rect.top + window.scrollY,
+                height: rect.height
+            };
+        });
+
+        // Initialize state to prevent first-render flash
+        checkScroll();
+    }
+
+    function checkScroll() {
+        const scrolled = window.scrollY;
+        const scrollBottom = scrolled + windowHeight;
+
+        // Active Navigation Highlight
+        let current = '';
+
+        // Handle scroll-to-bottom edge case
+        if (scrolled + windowHeight >= docHeight - 10) {
+             if (sectionCache.length > 0) current = sectionCache[sectionCache.length - 1].id;
+        } else {
+             for (let i = 0; i < sectionCache.length; i++) {
+                 if (scrolled >= sectionCache[i].top) {
+                     current = sectionCache[i].id;
+                 }
+             }
+        }
+
+        // Only update DOM if the active section changed
+        if (current !== lastActiveId) {
+            navLinks.forEach(link => {
+                const isActive = link.getAttribute('href') === `#${current}`;
+                if (isActive !== link.classList.contains('active')) {
+                   if (isActive) link.classList.add('active');
+                   else link.classList.remove('active');
+                }
+            });
+            lastActiveId = current;
+        }
+
+        // Parallax Effect - Only apply if visible in viewport
+        orbCache.forEach(cachedOrb => {
+            // Account for the translation itself in the visibility check
+            const currentTranslate = scrolled * cachedOrb.speed;
+            const actualTop = cachedOrb.absoluteTop + currentTranslate;
+            const actualBottom = actualTop + cachedOrb.height;
+
+            // Check if element's *translated* position is in viewport bounds
+            const isVisible = (actualTop < scrollBottom) && (actualBottom > scrolled);
+
+            if (isVisible) {
+                // translate3d forces GPU acceleration
+                cachedOrb.element.style.transform = `translate3d(0, ${currentTranslate}px, 0)`;
+            }
+        });
+    }
+
+    // Initial cache and updates
+    window.addEventListener('load', cacheMetrics);
+    window.addEventListener('resize', cacheMetrics);
+
+    // ResizeObserver catches dynamic content changes (like images loading)
+    new ResizeObserver(cacheMetrics).observe(document.body);
+
+    // Throttled scroll listener
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
-                const scrolled = window.scrollY;
-
-                // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
-
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
-                });
-
+                checkScroll();
                 ticking = false;
             });
             ticking = true;
         }
     }, { passive: true });
+
+    // Call once synchronously in case load event already fired
+    cacheMetrics();
 }
 
 // ===== Counter Animation for Statistics (if added) =====
