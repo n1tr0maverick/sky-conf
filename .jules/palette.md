@@ -1,0 +1,3 @@
+## 2024-05-24 - Retrofitting keyboard accessibility for interactive divs
+**Learning:** Adding keyboard support (Enter/Space) and focus styles correctly to interactive `div` elements acting like buttons significantly improves screen reader and keyboard accessibility, reducing friction for disabled users. Simply setting `tabindex="0"` is not enough; one must attach `keydown` listeners handling `Enter` and `Space`.
+**Action:** Always create an initialization script traversing `[onclick]:not(button):not(a):not(input)` and custom component selectors like `.carousel-slide` to programmatically add `role="button"`, `tabindex="0"`, and proper `keydown` bindings to retro-fit custom UI components for proper accessibility.
