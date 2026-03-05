@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -501,6 +502,27 @@ function openSpeakerBio(modalId, speakerId) {
 
 // Make functions globally available for inline onclick handlers
 window.openModal = openModal;
+// ===== Accessibility Functions =====
+function initAccessibility() {
+    // Make interactive divs keyboard accessible
+    const interactiveElements = document.querySelectorAll('[onclick]:not(button):not(a):not(input), .carousel-slide');
+
+    interactiveElements.forEach(el => {
+        // Add ARIA role and tabindex if not already present
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
+        // Add keyboard support for Space and Enter
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault(); // Prevent scrolling on Space
+                // Trigger native click event to ensure bubbling and standard behavior
+                el.click();
+            }
+        });
+    });
+}
+
 window.closeModal = closeModal;
 window.toggleBio = toggleBio;
 window.openSpeakerBio = openSpeakerBio;
