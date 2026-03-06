@@ -8,3 +8,6 @@
 ## 2026-02-05 - [Bulk Lazy Loading Optimization]
 **Learning:** When using regex for bulk HTML updates, context-aware counting is essential to distinguish identical assets (like logos) used in different positions (Navbar vs Footer).
 **Action:** Always count occurrences or use parent context when excluding LCP elements from lazy loading optimization.
+\n## 2026-03-06 - [Scroll Event Layout Thrashing Optimization]
+**Learning:** Reading layout metrics like `offsetTop` synchronously inside a high-frequency `scroll` event handler causes continuous layout thrashing, even if DOM updates are batched with `requestAnimationFrame`.
+**Action:** Cache static layout metrics (`offsetTop`, `window.innerHeight`, `document.documentElement.scrollHeight`, and absolute element bounds) on `load` and `resize`, and use these pre-computed values inside the `scroll` loop. Additionally, use state variables (`lastActiveId`) to prevent redundant `classList` writes.

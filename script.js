@@ -345,10 +345,49 @@ function initScrollAnimations() {
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const navLinks = document.querySelectorAll('.nav-links a:not(.logo)');
     const orbs = document.querySelectorAll('.gradient-orb');
     
     let ticking = false;
+    let sectionPositions = [];
+    let orbMetrics = [];
+    let wHeight = window.innerHeight;
+    let dHeight = document.documentElement.scrollHeight;
+    let lastActiveId = null;
+
+    function cacheLayout() {
+        wHeight = window.innerHeight;
+        dHeight = document.documentElement.scrollHeight;
+
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+
+        orbMetrics = Array.from(orbs).map((orb, index) => {
+            const currentTransform = orb.style.transform;
+            orb.style.transform = 'none';
+            const rect = orb.getBoundingClientRect();
+            orb.style.transform = currentTransform;
+
+            return {
+                element: orb,
+                speed: 0.1 * (index + 1),
+                top: rect.top + window.scrollY,
+                bottom: rect.bottom + window.scrollY
+            };
+        });
+    }
+
+    cacheLayout();
+    window.addEventListener('resize', cacheLayout, { passive: true });
+
+    if (typeof ResizeObserver !== 'undefined') {
+        const observer = new ResizeObserver(() => {
+            window.requestAnimationFrame(cacheLayout);
+        });
+        observer.observe(document.body);
+    }
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -357,24 +396,39 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+                // Check if user has scrolled to the absolute bottom
+                if (scrolled + wHeight >= dHeight - 10 && sectionPositions.length > 0) {
+                    current = sectionPositions[sectionPositions.length - 1].id;
+                } else {
+                    for (let i = 0; i < sectionPositions.length; i++) {
+                        if (scrolled >= sectionPositions[i].top) {
+                            current = sectionPositions[i].id;
+                        }
                     }
-                });
+                }
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href === `#${current}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                const viewBottom = scrolled + wHeight;
+                orbMetrics.forEach(metric => {
+                    const orbTranslatedTop = metric.top + (scrolled * metric.speed);
+                    const orbTranslatedBottom = metric.bottom + (scrolled * metric.speed);
+
+                    // Visibility check accounting for translation
+                    if (orbTranslatedBottom > scrolled && orbTranslatedTop < viewBottom) {
+                        metric.element.style.transform = `translate3d(0, ${scrolled * metric.speed}px, 0)`;
+                    }
                 });
 
                 ticking = false;
