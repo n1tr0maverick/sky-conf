@@ -349,6 +349,47 @@ function initOptimizedScrollHandlers() {
     const orbs = document.querySelectorAll('.gradient-orb');
     
     let ticking = false;
+    let sectionPositions = [];
+    let orbPositions = [];
+    let winHeight = window.innerHeight;
+    let docHeight = document.documentElement.scrollHeight;
+    let lastActiveId = '';
+
+    // Cache layout metrics to avoid layout thrashing during scroll
+    function updateLayoutCache() {
+        winHeight = window.innerHeight;
+        docHeight = document.documentElement.scrollHeight;
+
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100,
+            bottom: section.offsetTop + section.offsetHeight
+        }));
+
+        orbPositions = Array.from(orbs).map(orb => {
+            // Temporarily disable transform to get true base position
+            const currentTransform = orb.style.transform;
+            orb.style.transform = 'none';
+            const rect = orb.getBoundingClientRect();
+            // Cache absolute position relative to document
+            const top = rect.top + window.scrollY;
+            const bottom = rect.bottom + window.scrollY;
+            orb.style.transform = currentTransform;
+
+            return { element: orb, top, bottom };
+        });
+    }
+
+    // Initial cache and update on layout changes
+    updateLayoutCache();
+    window.addEventListener('load', updateLayoutCache);
+    window.addEventListener('resize', updateLayoutCache);
+
+    // Watch for dynamic content changes
+    if (typeof ResizeObserver !== 'undefined') {
+        const resizeObserver = new ResizeObserver(updateLayoutCache);
+        resizeObserver.observe(document.body);
+    }
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -357,24 +398,41 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Check if user has scrolled to the absolute bottom
+                if (scrolled + winHeight >= docHeight - 10) {
+                    current = sectionPositions[sectionPositions.length - 1]?.id || '';
+                } else {
+                    for (let i = 0; i < sectionPositions.length; i++) {
+                        if (scrolled >= sectionPositions[i].top) {
+                            current = sectionPositions[i].id;
+                        }
                     }
-                });
+                }
 
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
+                // Only update DOM if active section changed
+                if (current !== lastActiveId) {
+                    lastActiveId = current;
+                    navLinks.forEach(link => {
+                        const isMatch = link.getAttribute('href') === `#${current}`;
+                        link.classList.toggle('active', isMatch);
+                    });
+                }
+
+                // Parallax Effect (optimized with bounds check)
+                orbPositions.forEach((orbCache, index) => {
                     const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    const yOffset = scrolled * speed;
+
+                    // Fast bounds check using cached absolute positions + current offset
+                    const adjustedTop = orbCache.top + yOffset;
+                    const adjustedBottom = orbCache.bottom + yOffset;
+
+                    const isVisible = (adjustedTop < scrolled + winHeight) && (adjustedBottom > scrolled);
+
+                    if (isVisible || scrolled < winHeight * 1.5) {
+                        orbCache.element.style.transform = `translate3d(0, ${yOffset}px, 0)`;
+                    }
                 });
 
                 ticking = false;
