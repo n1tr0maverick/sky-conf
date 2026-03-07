@@ -1,0 +1,3 @@
+## 2024-03-07 - Add Keyboard Accessibility to Interactive Divs
+**Learning:** A reusable accessibility pattern for this project involves retrofitting interactive `div` elements (like those with `onclick` handlers or `.carousel-slide`) by adding `role="button"`, `tabindex="0"`, and a `keydown` listener (for Enter/Space) that explicitly calls `el.click()` to ensure native event bubbling and standard behavior, rather than manually invoking their `onclick` handlers.
+**Action:** Apply this pattern proactively across new or existing components that use non-semantic interactive elements to ensure complete keyboard navigability.

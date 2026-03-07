@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -500,6 +501,24 @@ function openSpeakerBio(modalId, speakerId) {
 }
 
 // Make functions globally available for inline onclick handlers
+// ===== Accessibility Enhancements =====
+function initAccessibility() {
+    // Retrofit interactive divs with keyboard support
+    const interactiveDivs = document.querySelectorAll('div[onclick]:not(button):not(a), .carousel-slide');
+
+    interactiveDivs.forEach(el => {
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
+}
+
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.toggleBio = toggleBio;
