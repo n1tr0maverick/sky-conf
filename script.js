@@ -344,9 +344,55 @@ function initScrollAnimations() {
 
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
-    const sections = document.querySelectorAll('section[id]');
+    // ⚡ Bolt: Cache layout metrics and state to prevent layout thrashing
+    const sections = Array.from(document.querySelectorAll('section[id]'));
     const navLinks = document.querySelectorAll('.nav-links a');
-    const orbs = document.querySelectorAll('.gradient-orb');
+    const orbsElements = document.querySelectorAll('.gradient-orb');
+
+    let sectionPositions = [];
+    let orbData = [];
+    let docHeight = 0;
+    let winHeight = 0;
+    let lastActiveId = null;
+
+    function updateMetrics() {
+        docHeight = document.documentElement.scrollHeight;
+        winHeight = window.innerHeight;
+
+        sectionPositions = sections.map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+
+        // Prevent layout thrashing during measurement by separating reads and writes
+        const originalTransforms = [];
+        orbsElements.forEach(orb => {
+            originalTransforms.push(orb.style.transform);
+            orb.style.transform = 'none';
+        });
+
+        orbData = Array.from(orbsElements).map((orb, index) => {
+            const rect = orb.getBoundingClientRect();
+            return {
+                element: orb,
+                top: rect.top + window.scrollY,
+                height: rect.height || orb.offsetHeight,
+                speed: 0.1 * (index + 1)
+            };
+        });
+
+        orbsElements.forEach((orb, index) => {
+            orb.style.transform = originalTransforms[index];
+        });
+    }
+
+    // Initialize metrics and attach refresh handlers
+    updateMetrics();
+    window.addEventListener('load', updateMetrics);
+    window.addEventListener('resize', updateMetrics);
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(updateMetrics).observe(document.body);
+    }
     
     let ticking = false;
     
@@ -355,26 +401,45 @@ function initOptimizedScrollHandlers() {
             window.requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
 
-                // Active Navigation Highlight
+                // Active Navigation Highlight - Read cached metrics
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+                for (let i = 0; i < sectionPositions.length; i++) {
+                    if (scrolled >= sectionPositions[i].top) {
+                        current = sectionPositions[i].id;
                     }
-                });
+                }
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // If user scrolled to absolute bottom, highlight the last section
+                if (scrolled + winHeight >= docHeight - 10) {
+                    current = sectionPositions[sectionPositions.length - 1].id;
+                }
+
+                // Only update DOM if active section changed
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        // Ensure we don't apply active to standalone links like the logo (#home)
+                        if (!link.classList.contains('logo')) {
+                            if (href === `#${current}`) {
+                                link.classList.add('active');
+                            } else {
+                                link.classList.remove('active');
+                            }
+                        }
+                    });
+                    lastActiveId = current;
+                }
+
+                // Parallax Effect - Only update visible orbs
+                orbData.forEach(orb => {
+                    const yOffset = scrolled * orb.speed;
+                    // Check if orb (with its transform applied) is within the viewport bounds
+                    const isVisible = (scrolled + winHeight > orb.top + yOffset) && (scrolled < orb.top + orb.height + yOffset);
+
+                    if (isVisible) {
+                        // Use translate3d for hardware acceleration
+                        orb.element.style.transform = `translate3d(0, ${yOffset}px, 0)`;
                     }
-                });
-
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
                 });
 
                 ticking = false;
