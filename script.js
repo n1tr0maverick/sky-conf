@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -405,6 +406,25 @@ function animateCounter(element, target, duration = 2000) {
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
+
+// ===== Accessibility Enhancements =====
+function initAccessibility() {
+    // Retrofit interactive elements that aren't native buttons or links
+    const interactiveElements = document.querySelectorAll('[onclick]:not(button):not(a):not(input), .carousel-slide');
+
+    interactiveElements.forEach(el => {
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
+        // Add keyboard support for Enter and Space keys
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault(); // Prevent page scrolling on Space
+                el.click(); // Trigger the native click event to bubble up
+            }
+        });
+    });
+}
 
 // ===== Modal Functions =====
 function initModals() {
