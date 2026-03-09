@@ -1,0 +1,3 @@
+## 2024-05-15 - Retrofitting Interactive Divs for Accessibility
+**Learning:** This project heavily relies on non-button elements (like `div` elements with `onclick` handlers and `.carousel-slide` elements) for interactive actions, which breaks keyboard navigation and screen reader support since they lack native focusability and keyboard event handling.
+**Action:** Created a reusable pattern `initAccessibility()` to retrofit these elements by dynamically adding `role="button"`, `tabindex="0"`, and `keydown` listeners for Enter/Space to ensure they are accessible without rewriting large chunks of HTML.
