@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,28 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility Retrofit =====
+function initAccessibility() {
+    // Make interactive div/span elements keyboard accessible
+    const interactiveElements = document.querySelectorAll(
+        '[onclick]:not(button):not(a):not(input), .carousel-slide'
+    );
+
+    interactiveElements.forEach(el => {
+        // Only add if not already present
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
+        // Add keyboard support (Enter or Space)
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click(); // Trigger the native click behavior
+            }
+        });
+    });
 }
 
 // Make functions globally available for inline onclick handlers
