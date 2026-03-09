@@ -344,44 +344,112 @@ function initScrollAnimations() {
 
 // ===== Optimized Scroll Handlers (Active Nav & Parallax) =====
 function initOptimizedScrollHandlers() {
-    const sections = document.querySelectorAll('section[id]');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
     const navLinks = document.querySelectorAll('.nav-links a');
-    const orbs = document.querySelectorAll('.gradient-orb');
+    const orbs = Array.from(document.querySelectorAll('.gradient-orb'));
     
+    // Cached layout metrics
+    let sectionPositions = [];
+    let orbMetrics = [];
+    let windowHeight = window.innerHeight;
+    let docHeight = document.documentElement.scrollHeight;
+    let lastActiveId = null;
+    
+    function calculatePositions() {
+        windowHeight = window.innerHeight;
+        docHeight = document.documentElement.scrollHeight;
+
+        sectionPositions = sections.map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+
+        // Reset transforms temporarily to calculate accurate initial bounds
+        orbs.forEach(orb => orb.style.transform = 'none');
+
+        // Calculate bounds in a separate loop after all writes to avoid layout thrashing
+        orbMetrics = orbs.map((orb, index) => {
+            const rect = orb.getBoundingClientRect();
+            // Get absolute top considering current scroll
+            return {
+                element: orb,
+                speed: 0.1 * (index + 1),
+                top: rect.top + window.scrollY,
+                height: rect.height
+            };
+        });
+
+        // Restore transforms based on current scroll position
+        updateScrollState(window.scrollY);
+    }
+
+    function updateScrollState(scrolled) {
+        // Active Navigation Highlight
+        let current = '';
+
+        if (scrolled + windowHeight >= docHeight - 10) {
+            current = sectionPositions.length > 0 ? sectionPositions[sectionPositions.length - 1].id : '';
+        } else {
+            for (let i = sectionPositions.length - 1; i >= 0; i--) {
+                if (scrolled >= sectionPositions[i].top) {
+                    current = sectionPositions[i].id;
+                    break;
+                }
+            }
+        }
+
+        // Only update DOM if the active section changed
+        if (current !== lastActiveId && current !== '') {
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === `#${current}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            lastActiveId = current;
+        }
+
+        // Parallax Effect - only update visible elements
+        orbMetrics.forEach(orbData => {
+            const maxTranslate = scrolled * orbData.speed;
+            const currentTop = orbData.top + maxTranslate;
+
+            // Add margin for smooth entry/exit
+            if (currentTop < scrolled + windowHeight + 200 &&
+                currentTop + orbData.height > scrolled - 200) {
+                orbData.element.style.transform = `translateY(${maxTranslate}px)`;
+            }
+        });
+    }
+
+    // Initialize cache
+    calculatePositions();
+
+    // Event Listeners
     let ticking = false;
-    
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
-                const scrolled = window.scrollY;
-
-                // Active Navigation Highlight
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
-
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
-                });
-
+                updateScrollState(window.scrollY);
                 ticking = false;
             });
             ticking = true;
         }
     }, { passive: true });
+
+    // Update cache on resize and load
+    window.addEventListener('resize', calculatePositions);
+    window.addEventListener('load', calculatePositions);
+
+    // Watch for dynamic DOM changes
+    if (typeof ResizeObserver !== 'undefined') {
+        const resizeObserver = new ResizeObserver(() => {
+            calculatePositions();
+        });
+        resizeObserver.observe(document.body);
+    }
 }
 
 // ===== Counter Animation for Statistics (if added) =====
