@@ -349,6 +349,52 @@ function initOptimizedScrollHandlers() {
     const orbs = document.querySelectorAll('.gradient-orb');
     
     let ticking = false;
+    let sectionPositions = [];
+    let orbBounds = [];
+    let docHeight = 0;
+    let winHeight = 0;
+    let lastActiveId = '';
+
+    function calculateMetrics() {
+        docHeight = document.documentElement.scrollHeight;
+        winHeight = window.innerHeight;
+
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+
+        // Separate DOM writes and reads to prevent layout thrashing
+        orbs.forEach(orb => {
+            orb.style.transform = 'none';
+        });
+
+        orbBounds = Array.from(orbs).map(orb => {
+            const rect = orb.getBoundingClientRect();
+            return {
+                top: rect.top + window.scrollY,
+                bottom: rect.bottom + window.scrollY
+            };
+        });
+
+        // Restore transform - we will reapply the correct one on next scroll event
+        const scrolled = window.scrollY;
+        orbs.forEach((orb, index) => {
+            const speed = 0.1 * (index + 1);
+            orb.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+    }
+
+    calculateMetrics();
+
+    window.addEventListener('load', calculateMetrics);
+    window.addEventListener('resize', calculateMetrics);
+
+    // Watch for layout changes
+    if (typeof ResizeObserver !== 'undefined') {
+        const observer = new ResizeObserver(calculateMetrics);
+        observer.observe(document.body);
+    }
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -357,24 +403,45 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                // Check if user scrolled to bottom
+                if (scrolled + winHeight >= docHeight - 10) {
+                    current = sectionPositions[sectionPositions.length - 1]?.id || '';
+                } else {
+                    for (const pos of sectionPositions) {
+                        if (scrolled >= pos.top) {
+                            current = pos.id;
+                        }
                     }
-                });
+                }
+
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
 
                 // Parallax Effect
                 orbs.forEach((orb, index) => {
                     const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    const transformOffset = scrolled * speed;
+
+                    // Visibility check accounting for transform offset
+                    const bounds = orbBounds[index];
+                    if (bounds) {
+                        const visualTop = bounds.top + transformOffset;
+                        const visualBottom = bounds.bottom + transformOffset;
+
+                        // Only apply transform if orb is in or near viewport
+                        if (visualBottom > scrolled - 200 && visualTop < scrolled + winHeight + 200) {
+                            orb.style.transform = `translateY(${transformOffset}px)`;
+                        }
+                    }
                 });
 
                 ticking = false;
