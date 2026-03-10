@@ -1,0 +1,3 @@
+## 2024-05-18 - Retrofitting Interactive Divs
+**Learning:** A reusable accessibility pattern for this project involves retrofitting interactive `div` elements (e.g. ones with `onclick` but lacking proper semantic HTML elements like buttons or links). To make them accessible, we must add `role="button"`, `tabindex="0"`, and a `keydown` listener (for Enter/Space) that explicitly calls `el.click()` to ensure native event bubbling and standard behavior. Managing `aria-expanded` is also essential for cards acting as toggles (e.g., speaker bios).
+**Action:** Always apply `role`, `tabindex`, and `keydown` handlers when retrofitting interactive UI elements, and remember to synchronize ARIA state attributes like `aria-expanded` when the visual state changes.
