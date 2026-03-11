@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initOptimizedScrollHandlers();
     initModals();
+    initAccessibility();
     
     // Initialize language toggle (from translations.js)
     if (typeof initLanguageToggle === 'function') {
@@ -497,6 +498,26 @@ function openSpeakerBio(modalId, speakerId) {
             }, 100);
         }
     }
+}
+
+// ===== Accessibility Retrofit =====
+function initAccessibility() {
+    const interactiveElements = document.querySelectorAll('[onclick], .carousel-slide');
+
+    interactiveElements.forEach(el => {
+        const tag = el.tagName.toLowerCase();
+        if (tag !== 'button' && tag !== 'a' && tag !== 'input') {
+            if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+            if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+
+            el.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    el.click();
+                }
+            });
+        }
+    });
 }
 
 // Make functions globally available for inline onclick handlers
