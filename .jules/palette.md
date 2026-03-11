@@ -1,0 +1,3 @@
+## 2024-05-24 - Retrofitting click elements for accessibility
+**Learning:** A reusable accessibility pattern for this project involves retrofitting interactive non-button elements (like `div` elements with `onclick` attributes or specific classes like `.carousel-slide`) by programmatically adding `role="button"`, `tabindex="0"`, and a `keydown` listener (for Enter/Space) that explicitly calls `el.click()`. This ensures native event bubbling and standard behavior, rather than manually invoking `el.onclick()` handlers.
+**Action:** Use this `initAccessibility` pattern (or similar) whenever interactive components are built without native `<button>` or `<a>` elements to ensure full keyboard accessibility.
