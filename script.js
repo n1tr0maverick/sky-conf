@@ -349,6 +349,28 @@ function initOptimizedScrollHandlers() {
     const orbs = document.querySelectorAll('.gradient-orb');
     
     let ticking = false;
+    let sectionPositions = [];
+    let docHeight = 0;
+    let winHeight = 0;
+    let lastActiveId = null;
+
+    function updateMetrics() {
+        docHeight = document.documentElement.scrollHeight;
+        winHeight = window.innerHeight;
+        sectionPositions = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 100
+        }));
+    }
+
+    updateMetrics();
+    window.addEventListener('load', updateMetrics);
+    window.addEventListener('resize', updateMetrics);
+
+    // Handle dynamic layout shifts (e.g. from images loading)
+    if (window.ResizeObserver) {
+        new ResizeObserver(updateMetrics).observe(document.body);
+    }
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -357,25 +379,34 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
+                sectionPositions.forEach(pos => {
+                    if (scrolled >= pos.top) {
+                        current = pos.id;
                     }
                 });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                // Absolute bottom edge case
+                if (scrolled + winHeight >= docHeight - 10 && sectionPositions.length > 0) {
+                    current = sectionPositions[sectionPositions.length - 1].id;
+                }
 
-                // Parallax Effect
-                orbs.forEach((orb, index) => {
-                    const speed = 0.1 * (index + 1);
-                    orb.style.transform = `translateY(${scrolled * speed}px)`;
-                });
+                if (current !== lastActiveId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    lastActiveId = current;
+                }
+
+                // Parallax Effect - Only update if roughly in view
+                if (scrolled < winHeight * 1.5) {
+                    orbs.forEach((orb, index) => {
+                        const speed = 0.1 * (index + 1);
+                        orb.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+                }
 
                 ticking = false;
             });
