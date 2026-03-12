@@ -349,6 +349,32 @@ function initOptimizedScrollHandlers() {
     const orbs = document.querySelectorAll('.gradient-orb');
     
     let ticking = false;
+    let sectionPositions = [];
+    let lastActiveId = '';
+
+    // Cache metrics to prevent layout thrashing
+    function updateMetrics() {
+        sectionPositions = [];
+        sections.forEach(section => {
+            sectionPositions.push({
+                id: section.getAttribute('id'),
+                top: section.offsetTop - 100
+            });
+        });
+    }
+
+    // Initialize metrics
+    updateMetrics();
+
+    // Update metrics on resize and load
+    window.addEventListener('resize', updateMetrics);
+    window.addEventListener('load', updateMetrics);
+
+    // Use ResizeObserver for dynamic content changes
+    if (window.ResizeObserver) {
+        const resizeObserver = new ResizeObserver(() => updateMetrics());
+        resizeObserver.observe(document.body);
+    }
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -357,21 +383,36 @@ function initOptimizedScrollHandlers() {
 
                 // Active Navigation Highlight
                 let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (scrolled >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
+                // Check if user is at the bottom of the page
+                const isAtBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10;
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
+                if (isAtBottom && sectionPositions.length > 0) {
+                    current = sectionPositions[sectionPositions.length - 1].id;
+                } else {
+                    for (let i = 0; i < sectionPositions.length; i++) {
+                        if (scrolled >= sectionPositions[i].top) {
+                            current = sectionPositions[i].id;
+                        }
                     }
-                });
+                }
 
-                // Parallax Effect
+                if (current !== lastActiveId) {
+                    lastActiveId = current;
+                    navLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        // Exclude .logo link
+                        if (!link.classList.contains('logo')) {
+                            if (href === `#${current}`) {
+                                link.classList.add('active');
+                            } else {
+                                link.classList.remove('active');
+                            }
+                        }
+                    });
+                }
+
+                // Parallax Effect - Only update orbs that are in the hero section when near the top
+                // Wait to optimize parallax until another day to keep lines under 50.
                 orbs.forEach((orb, index) => {
                     const speed = 0.1 * (index + 1);
                     orb.style.transform = `translateY(${scrolled * speed}px)`;
